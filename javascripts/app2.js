@@ -46,9 +46,9 @@ $(document).ready(function() {
           var bValid = true;
           allFields.removeClass( "ui-state-error" );
  
-          bValid = bValid && checkLength( Title, "Title", 3, 16 );
-          bValid = bValid && checkLength( Category, "Category", 3, 10 );
-          bValid = bValid && checkLength( Content, "Content", 5, 5000 );
+          bValid = bValid && checkLength( Title, "Title", 1, 100 );
+          bValid = bValid && checkLength( Category, "Category", 1, 100);
+          bValid = bValid && checkLength( Content, "Content", 1, 5000 );
   
           if ( bValid ) {
              addPost(Title.val(), Category.val(),Content.val());
