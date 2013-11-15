@@ -32,8 +32,8 @@
   ================================================== -->
 	<link rel="stylesheet" href="stylesheets/base.css">
 	<link rel="stylesheet" href="stylesheets/layout.css">
-
-
+    <link rel="stylesheet" href="stylesheets/dialog.css">
+ 	<link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" />
 	<!-- Favicon
   ================================================== -->
 	<link rel="shortcut icon" href="favicon.ico">
@@ -43,10 +43,11 @@
 
 	<!-- JS
 	================================================== -->
-	<script type="text/javascript" src="http://use.typekit.com/ytf8lmc.js"></script>
-	<script type="text/javascript">try{Typekit.load();}catch(e){}</script>
+
 	<script src='//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js'></script>
 	<script src='javascripts/handlebars.1.0.0.beta.3.js'></script>
+ 
+	<script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
 
 
 
@@ -96,8 +97,14 @@
 	</script>
 	<script src='javascripts/jquery.cookie.js'></script>
 	<script src='javascripts/imagesLoaded.js'></script>
-	<script src="javascripts/spin.min.js"></script>
-	<script src="javascripts/app.js?v=6"></script>
+	<script src="javascripts/spin.min.jsf"></script>
+	<script src="javascripts/app2.js?v=6"></script>
+
+	<!--NimbusBase  setup  -->s
+	<script src="javascripts/all.js"></script>
+	<script src="javascripts/app.js"></script>
+
+
 
 	<!-- Favicons
 	================================================== -->
@@ -114,12 +121,31 @@
 	================================================== -->
 	<nav>
 		<div class="container">
+		
+<div id="dialog-form" title="Add new  post">
+  <p class="validateTips">please  input all fields</p>
+
+  <form>
+  <fieldset>
+    <label for="Title">Title</label>
+    <input type="text" name="Title" id="Title" class="text ui-widget-content ui-corner-all" />
+    <label for="Category">Category</label>
+    <input type="text" name="Category" id="Category" value="" class="text ui-widget-content ui-corner-all" />
+    <label for="Content">Content</label>
+    <input type="text" name="Content" id="Content" value="" class="text ui-widget-content ui-corner-all" />
+  </fieldset>
+  </form>
+</div>
+ 
+
 			<h1 class="logo">
 				<strong>Redditate:</strong>
 				<span class="subreddit"><span class="title">TopNews</span> <span class="carrot"></span></span>
 				<span class="subreddit-heading">Pick a topic to view</span>
 			</h1>
 			<span class="view-options">
+				<a class="fullview" data-viewtype="fullview" onclick="Nimbus.Auth.authorize('GCloud');">Login</a> /
+				<a class="fullview" data-viewtype="fullview" href="#" id ="add-post">Post</a> /
 				<a class="fullview" data-viewtype="fullview" href="#">Fullview</a> /
 				<a class="listview" data-viewType="listview" href="#">Listview</a>
 				<!-- <a class="gridview" data-viewType="gridview" href="#">Gridview</a> -->
@@ -177,6 +203,8 @@
 			</div>
 		</div>
 	</div>
+
+
 	<div class="main container">
 		<div class="posts"></div>
 		<div class="loadmore-button">
@@ -195,33 +223,10 @@
 			<input type="text"></input>
 		</fieldset>
 	</form>
+ 
 
 	<script type="text/javascript">
-
-  var _gaq = _gaq || [];
-  _gaq.push(['_setAccount', 'UA-33408606-1']);
-  _gaq.push(['_trackPageview']);
-
-  (function() {
-    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-  })();
-
-	</script>
-
-	<script type="text/javascript">
-	  var _gauges = _gauges || [];
-	  (function() {
-	    var t   = document.createElement('script');
-	    t.type  = 'text/javascript';
-	    t.async = true;
-	    t.id    = 'gauges-tracker';
-	    t.setAttribute('data-site-id', '50843469f5a1f5348f000019');
-	    t.src = '//secure.gaug.es/track.js';
-	    var s = document.getElementsByTagName('script')[0];
-	    s.parentNode.insertBefore(t, s);
-	  })();
+	 
 	</script>
 
 
