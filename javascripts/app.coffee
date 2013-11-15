@@ -16,7 +16,7 @@ window.Post =  Nimbus.Model.setup("Post", ["title", "content", "category"])
 #Sync  
 Nimbus.Auth.set_app_ready(()->
 	if Nimbus.Auth.authorized
-		Post.sync_all()
+		window.Post.sync_all()
 	else
 	##	Nimbus.Auth.authorize("GCloud")
 )
@@ -26,7 +26,7 @@ window.addPost = (title,category,content)->
 		"title":title
 		"category":category
 		"content":content
-	Post.create(post)
+	window.Post.create(post)
 
-window.RendPost = (callback)-> 
-	callback Post.all()
+window.RenderPost = (callback)-> 
+	callback window.Post.all()

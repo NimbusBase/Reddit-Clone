@@ -18,7 +18,7 @@
 
   Nimbus.Auth.set_app_ready(function() {
     if (Nimbus.Auth.authorized) {
-      return Post.sync_all();
+      return window.Post.sync_all();
     } else {
 
     }
@@ -31,11 +31,11 @@
       "category": category,
       "content": content
     };
-    return Post.create(post);
+    return window.Post.create(post);
   };
 
-  window.RendPost = function(callback) {
-    return callback(Post.all());
+  window.RenderPost = function(callback) {
+    return callback(window.Post.all());
   };
 
 }).call(this);

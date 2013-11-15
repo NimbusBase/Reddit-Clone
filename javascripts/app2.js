@@ -108,17 +108,16 @@ $(document).ready(function() {
 
   // Load data
   function loadJSON() {
-    alert("!");
-    window.RendPost (function(data) {
-      alert(JSON.stringify(data));
-      // $.each(data.data.children, function(i, post) {
-      //   alert (post);
-      //   //If the post wasn't loaded before, render it.
-      //   if(loadedPosts.indexOf(post.data.id) < 0) renderPost(post.data);
-      //   afterString = post.data.name;
-      //   //Save the post id.
-      //   loadedPosts.push(post.data.id);
-      // });
+     
+      $.getJSON("javascript:Post.all();", null, function(data) {
+        alert(data)
+      $.each(data.data.children, function(i, post) {
+        //If the post wasn't loaded before, render it.
+        if(loadedPosts.indexOf(post.data.id) < 0) renderPost(post.data);
+        afterString = post.data.name;
+        //Save the post id.
+        loadedPosts.push(post.data.id);
+      });
     }).complete(function() {
       post = $('.post');
       classifyImages();
