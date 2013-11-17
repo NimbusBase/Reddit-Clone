@@ -11,12 +11,14 @@ Nimbus.Auth.setup(syncInfo)
  
 
 #Model
-window.Post =  Nimbus.Model.setup("Post", ["title", "content", "category"])
+Post =  Nimbus.Model.setup("Post", ["title", "link", "category"])
 
 #Sync  
 Nimbus.Auth.set_app_ready(()->
 	if Nimbus.Auth.authorized
-		window.Post.sync_all()
+		 
+		Post.sync_all()
+		alert(JSON.stringify(Post.all()))
 	else
 	##	Nimbus.Auth.authorize("GCloud")
 )
@@ -26,7 +28,11 @@ window.addPost = (title,category,content)->
 		"title":title
 		"category":category
 		"content":content
-	window.Post.create(post)
+	Post.create(post)
 
 window.RenderPost = (callback)-> 
 	callback window.Post.all()
+
+exports = this;
+
+exports.Post = Post;

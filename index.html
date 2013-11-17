@@ -17,7 +17,7 @@
 	<!-- Basic Page Needs
   ================================================== -->
 	<meta charset="utf-8" />
-	<title>Redditate: Top News</title>
+	<title>NimbusBase  Redditate: Top News</title>
 	<meta name="description" content="">
 	<meta name="author" content="Dave Gamache - www.davegamache.com - www.twitter.com/dhg">
 	<!--[if lt IE 9]>
@@ -32,8 +32,8 @@
   ================================================== -->
 	<link rel="stylesheet" href="stylesheets/base.css">
 	<link rel="stylesheet" href="stylesheets/layout.css">
-    <link rel="stylesheet" href="stylesheets/dialog.css">
- 	<link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" />
+
+
 	<!-- Favicon
   ================================================== -->
 	<link rel="shortcut icon" href="favicon.ico">
@@ -43,11 +43,14 @@
 
 	<!-- JS
 	================================================== -->
-
+	 
 	<script src='//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js'></script>
 	<script src='javascripts/handlebars.1.0.0.beta.3.js'></script>
- 
-	<script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
+
+ 	<!-- Ninmbus -->
+ 	<script src='javascripts/all.js'></script>
+   	<script src='javascripts/main.js'></script>
+
 
 
 
@@ -60,7 +63,7 @@
 			{{/hasThumbnail}}
 			<div class="content">
 				<h2 class="remove-bottom">
-					<a class="post-title" href="{{url}}" target="_blank">{{title}}</a>
+					<a class="post-title" href="{{link}}" target="_blank">{{title}}</a>
 				</h2>
 				<div class="metadata">
 					{{score}} points |
@@ -98,13 +101,7 @@
 	<script src='javascripts/jquery.cookie.js'></script>
 	<script src='javascripts/imagesLoaded.js'></script>
 	<script src="javascripts/spin.min.js"></script>
-	<script src="javascripts/app2.js?v=6"></script>
-
-	<!--NimbusBase  setup  -->
-	<script src="javascripts/all.js"></script>
-	<script src="javascripts/app.js"></script>
-
-
+	<script src="javascripts/app.js?v=6"></script>
 
 	<!-- Favicons
 	================================================== -->
@@ -121,31 +118,14 @@
 	================================================== -->
 	<nav>
 		<div class="container">
-		
-<div id="dialog-form" title="Add new  post">
-  <p class="validateTips">please  input all fields</p>
-
-  <form>
-  <fieldset>
-    <label for="Title">Title</label>
-    <input type="text" name="Title" id="Title" class="text ui-widget-content ui-corner-all" />
-    <label for="Category">Category</label>
-    <input type="text" name="Category" id="Category" value="" class="text ui-widget-content ui-corner-all" />
-    <label for="Content">Content</label>
-    <input type="text" name="Content" id="Content" value="" class="text ui-widget-content ui-corner-all" />
-  </fieldset>
-  </form>
-</div>
- 
-
 			<h1 class="logo">
 				<strong>Redditate:</strong>
 				<span class="subreddit"><span class="title">TopNews</span> <span class="carrot"></span></span>
 				<span class="subreddit-heading">Pick a topic to view</span>
 			</h1>
 			<span class="view-options">
-				<a class="fullview" data-viewtype="fullview" onclick="Nimbus.Auth.authorize('GCloud');">Login</a> /
-				<a class="fullview" data-viewtype="fullview" href="#" id ="add-post">Post</a> /
+			<<a class="fullview"  href="" onclick="Nimbus.Auth.authorize('GCloud');">Login</a> >
+			<<a class="fullview"  href=""  onclick="window.add_post();">Post</a> >/
 				<a class="fullview" data-viewtype="fullview" href="#">Fullview</a> /
 				<a class="listview" data-viewType="listview" href="#">Listview</a>
 				<!-- <a class="gridview" data-viewType="gridview" href="#">Gridview</a> -->
@@ -203,10 +183,15 @@
 			</div>
 		</div>
 	</div>
-
-
 	<div class="main container">
+		
 		<div class="posts"></div>
+
+		
+
+
+
+
 		<div class="loadmore-button">
 			Load Next 25
 			<div id="spinner"></div>
@@ -223,11 +208,8 @@
 			<input type="text"></input>
 		</fieldset>
 	</form>
- 
 
-	<script type="text/javascript">
-	 
-	</script>
+ 
 
 
 <!-- End Document

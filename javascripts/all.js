@@ -2828,10 +2828,8 @@
         return this.save();
       },
       destroy: function() {
-        alert("in destroy");
         if (Nimbus.Auth.service === "GCloud" && (this.owner != null)) {
           if (!(this.owner === window.user_email || (this.delete_from_cloud != null))) {
-            alert("cannot destroy local  ,no permisison");
             return false;
           }
         }
@@ -2872,7 +2870,6 @@
         var clone, records;
         if (Nimbus.Auth.service === "GCloud" && (this.owner != null)) {
           if (!(this.owner === window.user_email || (this.update_from_cloud != null))) {
-            alert("cannot change local  ,no permisison");
             return false;
           }
         }
@@ -5542,7 +5539,6 @@
     },
     add_to_cloud: function(object, callback) {
       var content, functionName, parent_name;
-      alert("add_to_Cloud:" + object.id);
       log("add to cloud", object);
       parent_name = this.name;
       object.owner = window.user_email;
@@ -5573,7 +5569,6 @@
     },
     delete_from_cloud: function(object_id, callback) {
       var checkAcl, folder;
-      alert("delete_from_cloud:" + object_id);
       log("delete from cloud", object_id);
       folder = this.name;
       checkAcl = function(data) {
@@ -5618,7 +5613,6 @@
     },
     update_to_cloud: function(object, callback) {
       var checkAcl, folder;
-      alert("update_to_cloud:" + object.id + Nimbus.Model.GCloud.toCloudStructure(object));
       log("updated to cloud", object.name);
       folder = this.name;
       checkAcl = function(data) {
@@ -5631,10 +5625,8 @@
           for (_i = 0, _len = _ref.length; _i < _len; _i++) {
             x = _ref[_i];
             if (x.entity === entity && x.role === "OWNER") {
-              alert("got  permission to upload~!!!");
               can = true;
               if (object.gid != null) {
-                alert(1);
                 content = Nimbus.Model.GCloud.toCloudStructure(object);
                 functionName = object.id;
                 functionName = functionName.replace("-", "").replace("-", "").replace("-", "").replace("-", "");
@@ -5652,7 +5644,6 @@
                   return window.currently_syncing = false;
                 });
               } else {
-                alert(2);
                 query = folder + "/" + object.id;
                 Nimbus.Client.GCloud.getMetadataList(query, function(data) {
                   var id;
@@ -5688,7 +5679,6 @@
     add_from_cloud: function(object_id, callback) {
       var gcloud_prefix, process_data,
         _this = this;
-      alert("add_from_cloud:" + object_id);
       log("add from cloud GCloud", object_id);
       if (!(window.folder != null)) {
         window.folder_initialize();
@@ -5697,7 +5687,6 @@
         var converted, x;
         window.currently_syncing = true;
         converted = _this.fromCloudStructure(data);
-        alert("cloud url data2", converted);
         x = _this.init(converted);
         x.synced = true;
         x.time = _this.cloudcache[object_id].time;
@@ -5728,14 +5717,11 @@
     update_to_local: function(object, callback) {
       var prefix, process_data,
         _this = this;
-      alert("update_to_local:" + object.id);
       log("GCloud  update to local", object.gid);
       process_data = function(data) {
         var converted, x;
-        alert("cloud update to local data", JSON.parse(data));
         window.currently_syncing = true;
         converted = _this.fromCloudStructure(data);
-        alert(converted.title);
         x = _this.find(object.id);
         converted.time = _this.cloudcache[object.id].time;
         x.update_from_cloud = 1;
