@@ -32,7 +32,8 @@
   ================================================== -->
 	<link rel="stylesheet" href="stylesheets/base.css">
 	<link rel="stylesheet" href="stylesheets/layout.css">
-
+	<link rel="stylesheet" href="stylesheets/apprise-v2.css">
+ 
 
 	<!-- Favicon
   ================================================== -->
@@ -49,10 +50,8 @@
 
  	<!-- Ninmbus -->
  	<script src='javascripts/all.js'></script>
-   	<script src='javascripts/main.js'></script>
-
-
-
+   	<script src='javascripts/main.js'></script> 
+	<script src='javascripts/apprise-v2.js'></script> 
 
 	<!-- HTML template for post
 	================================================== -->
@@ -125,7 +124,7 @@
 			</h1>
 			<span class="view-options">
 			<<a class="fullview"  href="" onclick="Nimbus.Auth.authorize('GCloud');">Login</a> >
-			<<a class="fullview"  href=""  onclick="window.add_post();">Post</a> >/
+			<<a class="fullview"  href=""  id="add_post2"  onclick="window.add_post_popup();">Post</a> >/
 				<a class="fullview" data-viewtype="fullview" href="#">Fullview</a> /
 				<a class="listview" data-viewType="listview" href="#">Listview</a>
 				<!-- <a class="gridview" data-viewType="gridview" href="#">Gridview</a> -->

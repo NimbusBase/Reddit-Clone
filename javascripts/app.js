@@ -47,7 +47,7 @@ $(document).ready(function() {
   // Load data
   function loadJSON() {
  //   $.getJSON("http://www.reddit.com/"+subdomain+".json?limit=2&after="+afterString+"&jsonp=?", null, function(data) {
-      alert("!");
+    
       a =Post.all();
       for(var key in a){ 
        
@@ -169,7 +169,29 @@ $(document).ready(function() {
     document.title = "Redditate: "+readableSubdomain;
   }
 
+  
 
+
+//pop up
+window.add_post_popup= function (){
+    var options = {
+      buttons: {
+        confirm: {
+          text: 'post',
+          className: 'blue',
+          action: function(e) { 
+            window.addPost(e.input,e.input,e.input); 
+            Apprise('close');
+            loadJSON();
+            
+          }
+        },
+      },
+      input: true,
+    };
+
+    Apprise('please input a link', options);
+  }
   // Template Helpers -------------------------------------------------------------------------------
 
   // IMAGE: Rendering fullsize images
@@ -451,6 +473,9 @@ $(document).ready(function() {
     $('.subreddit-picker').slideUp(250);
   }
 
+
+
+
   //Spinner -------------------------------------------------------------------------------
   var optsWash = {
     width: 2 // The line thickness
@@ -466,3 +491,6 @@ $(document).ready(function() {
   spinnerButton = new Spinner(optsButton).spin(targetButton);
 
 });
+
+
+
