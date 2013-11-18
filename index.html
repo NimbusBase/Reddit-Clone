@@ -32,7 +32,9 @@
   ================================================== -->
 	<link rel="stylesheet" href="stylesheets/base.css">
 	<link rel="stylesheet" href="stylesheets/layout.css">
-	<link rel="stylesheet" href="stylesheets/apprise-v2.css">
+	<link rel="stylesheet" href="stylesheets/apprise-v2.css"> 
+	<link rel="stylesheet" href="stylesheets/jquery-ui.css">
+	<link rel="stylesheet" href="stylesheets/comment.css">
  
 
 	<!-- Favicon
@@ -51,32 +53,40 @@
  	<!-- Ninmbus -->
  	<script src='javascripts/all.js'></script>
    	<script src='javascripts/main.js'></script> 
-	<script src='javascripts/apprise-v2.js'></script> 
-
+	<script src='javascripts/apprise-v2.js'></script>  
+	<script src='javascripts/jquery-ui.js'></script>
+	<script src='javascripts/comment.js'></script>
 	<!-- HTML template for post
 	================================================== -->
 	<script id="postTemplate" type="text/x-handlebars-template">
-		<div class="post" id="{{name}}">
-			{{#hasThumbnail thumbnail url}}
-				{{thumbnail}}
-			{{/hasThumbnail}}
+		<div class="post" id="{{id}}"> 
 			<div class="content">
 				<h2 class="remove-bottom">
+					 
 					<a class="post-title" href="{{link}}" target="_blank">{{title}}</a>
+					<p 
 				</h2>
 				<div class="metadata">
-					{{score}} points |
-					<a class="permalink" href="http://www.reddit.com{{permalink}}" target="_blank">{{num_comments}} comments</a> |
-					{{domain}}
-					{{#isAlbum url}}
-					{{/isAlbum}}
+					by {{owner}}  |
+					<!--
+					<a class="permalink" href="#" target="_blank"> comments</a>|
+					
+					<a href="#" onclick="slidedown_showHide('box1');return false;">Try it</a></div>
+	<div class="dhtmlgoodies_mrcBox" id="box1">
+		<div class="dhtmlgoodies_mrc" id="subBox1">		 
+			This is comment1<br>
+			This is comment2<br>
+			This is comment3<br>
+			This is comment4<br> 
+		</div>
+ 					-->
+
+					{{#if canDelete }}
+					<a  id ="dialog-confirm" onclick="delete_popup('{{id}}');"> delete </a>
+					{{/if}}
+ 
 				</div>
-				{{#hasImage url}}
-					{{url}}
-				{{/hasImage}}
-				{{#hasYoutube url}}
-					{{url}}
-				{{/hasYoutube}}
+			
 			</div>
 		</div>
 	</script>
@@ -123,8 +133,8 @@
 				<span class="subreddit-heading">Pick a topic to view</span>
 			</h1>
 			<span class="view-options">
-			<<a class="fullview"  href="" onclick="Nimbus.Auth.authorize('GCloud');">Login</a> >
-			<<a class="fullview"  href=""  id="add_post2"  onclick="window.add_post_popup();">Post</a> >/
+			<a class="fullview"  href="" onclick="Nimbus.Auth.authorize('GCloud');">Login</a> /
+			<a class="fullview"  href=""  id="add_post2"  onclick="window.add_post_popup();">Post</a> /
 				<a class="fullview" data-viewtype="fullview" href="#">Fullview</a> /
 				<a class="listview" data-viewType="listview" href="#">Listview</a>
 				<!-- <a class="gridview" data-viewType="gridview" href="#">Gridview</a> -->

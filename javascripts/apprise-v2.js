@@ -29,6 +29,7 @@ function Apprise(text, options) {
 			$_inner = $('<div class="apprise-inner">'),
 			$_buttons = $('<div class="apprise-buttons">'),
 			$_input = $('<input type="text">');
+			$_input2= $('<input type="text">');
 	
 	// Default settings (edit these to your liking)
 	var settings = {
@@ -155,7 +156,8 @@ function Apprise(text, options) {
 				// Build response object
 				var response = {
 					clicked: button, // Pass back the object of the button that was clicked
-					input: ($_input.val() ? $_input.val() : null) // User inputted text
+					input: ($_input.val() ? $_input.val() : null), // User inputted text
+					input2: ($_input2.val() ? $_input2.val() : null) // User inputted text
 				};
 				
 				button.action( response );
@@ -181,7 +183,7 @@ function Apprise(text, options) {
 	$cA = this;
 	
 	if(settings.input) {
-		$_inner.find('.apprise-content').append( $('<div class="apprise-input">').append( $_input ) );
+		$_inner.find('.apprise-content').append( $('<div class="apprise-input">').append("<p>Title:</p>").append( $_input ).append("<p>Link:</p>").append( $_input2 ) );
 	}
 	
 	$overlay.fadeIn(300);

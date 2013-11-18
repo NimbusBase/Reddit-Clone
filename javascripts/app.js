@@ -11,7 +11,7 @@ $(document).ready(function() {
 
 
   //Global Vars -----------------------------------------------------
-
+ window.loadedPosts = [];
   var posts = $('.posts'),
   afterString,
   subdomain = readParams('r'),
@@ -23,8 +23,8 @@ $(document).ready(function() {
   hintIndex = 0,
   lock = false,
   commandDown = false,
-  subredditShortcutJustLaunched = false,
-  loadedPosts = [];
+  subredditShortcutJustLaunched = false;
+ 
 
 
 //Initial Load -------------------------------------------------------------------------------
@@ -47,19 +47,30 @@ $(document).ready(function() {
   // Load data
   function loadJSON() {
  //   $.getJSON("http://www.reddit.com/"+subdomain+".json?limit=2&after="+afterString+"&jsonp=?", null, function(data) {
-    
-      a =Post.all();
+      
+
+      //var posts.remove('')
+      var  a =Post.all();
       for(var key in a){ 
        
         //If the post wasn't loaded before, render it.
-        post = a[key];
+        var post = a[key];
+        
+        
+        var t = JSON.stringify(post.owner);
+        var t2 =JSON.stringify(localStorage["user_email"]);
        
-       if(loadedPosts.indexOf(post.id) < 0) renderPost(post);
- 
+        if(t2 == t)
+          post.canDelete = true;
+
+
+   
+       if(window.loadedPosts.indexOf(post.id) < 0) renderPost(post);
+  
         //Save the post id.
-        loadedPosts.push(post.id);
+        window.loadedPosts.push(post.id);
       }
-    
+     
 
       post = $('.post');
       classifyImages();
@@ -180,9 +191,12 @@ window.add_post_popup= function (){
           text: 'post',
           className: 'blue',
           action: function(e) { 
-            window.addPost(e.input,e.input,e.input); 
-            Apprise('close');
+            if(e.input2.indexOf("http") < 0)
+              e.input2 ="http://" + e.input2;
+            window.addPost(e.input,e.input2); 
+            Apprise('close'); 
             loadJSON();
+
             
           }
         },
@@ -192,6 +206,33 @@ window.add_post_popup= function (){
 
     Apprise('please input a link', options);
   }
+
+
+  //delete  popup
+  window.delete_popup= function(id){
+
+     $( "#dialog-confirm" ).dialog({
+      resizable: false,
+      height:140,
+      modal: true,
+      buttons: {
+        "Yes": function() {
+          
+          post = Post.find(id);
+          post.destroy(); 
+          $("#"+id).remove();
+          $( this ).dialog( "close" );
+          loadJSON();
+ 
+        },
+        "No": function() {
+          $( this ).dialog( "close" );
+        }
+      }
+    });
+  }
+
+
   // Template Helpers -------------------------------------------------------------------------------
 
   // IMAGE: Rendering fullsize images
@@ -230,6 +271,20 @@ window.add_post_popup= function (){
       youtubeLinkTime = youtubeLinkTime[1];
       return '<iframe width="420" height="345" src="http://www.youtube.com/embed/'+youtubeID+'?wmode=transparent&#'+youtubeLinkTime+'" frameborder="0" wmode="Opaque" allowfullscreen></iframe>';
     } else {
+      return false;
+    }
+  });
+ 
+  Handlebars.registerHelper('canDelete', function(id, fn) {
+    post1 = Post.find(id); 
+
+    if(post1.owner.equals(window.user_email)){
+     
+
+       return new Handlebars.SafeString(
+       "<a  id ='dialog-confirm' onclick=delete_popup('"+ id+"');> delete3</a>"
+        );
+    }else{
       return false;
     }
   });
@@ -339,10 +394,10 @@ window.add_post_popup= function (){
           subredditShortcutJustLaunched = true;
         }
         // Enter opens to current post
-        if (evt.keyCode == 13) {
-          var postLink = post.eq(activePost-1).find('.post-title').attr('href');
-          window.open(postLink,'_newtab');
-        }
+        // if (evt.keyCode == 13) {
+        //   var postLink = post.eq(activePost-1).find('.post-title').attr('href');
+        //   window.open(postLink,'_newtab');
+        // }
       }
     }
   };

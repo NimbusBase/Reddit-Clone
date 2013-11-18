@@ -16,22 +16,37 @@
 
   window.Post = Nimbus.Model.setup("Post", ["title", "link", "category"]);
 
+  window.Comment = Nimbus.Model.setup("Comment", ["postid", "comment"]);
+
   Nimbus.Auth.set_app_ready(function() {
     if (Nimbus.Auth.authorized) {
-      return Post.sync_all();
+      localStorage["user_email"] = window.user_email;
+      Post.sync_all();
+      return Comment.sync_all();
     } else {
 
     }
   });
 
-  window.addPost = function(title, category, link) {
+  window.addPost = function(title, link) {
     var post;
     post = {
       "title": title,
-      "category": category,
-      "link": link
+      "category": null,
+      "link": link,
+      "owner": window.user_email
     };
     return window.Post.create(post);
+  };
+
+  window.addComment = function(postid, comment) {
+    var newcomment;
+    newcomment = {
+      "postid": postid,
+      "comment": comment,
+      "owner": window.user_email
+    };
+    return window.Comment.create(newcomment);
   };
 
 }).call(this);
