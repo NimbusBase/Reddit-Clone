@@ -48,9 +48,9 @@ $(document).ready(function() {
   function loadJSON() {
  //   $.getJSON("http://www.reddit.com/"+subdomain+".json?limit=2&after="+afterString+"&jsonp=?", null, function(data) {
       
-
+    
       //var posts.remove('')
-      var  a =Post.all();
+      var  a =window.Post.all();
       for(var key in a){ 
        
         //If the post wasn't loaded before, render it.

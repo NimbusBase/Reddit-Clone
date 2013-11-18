@@ -17,9 +17,9 @@ window.Comment = Nimbus.Model.setup("Comment", ["postid", "comment"])
 Nimbus.Auth.set_app_ready(()->
 	if Nimbus.Auth.authorized
 		localStorage["user_email"] = window.user_email
-		Post.sync_all()
-		Comment.sync_all()
-
+		 
+		window.Post.sync_all()
+		 
 	else
 	##	Nimbus.Auth.authorize("GCloud")
 )

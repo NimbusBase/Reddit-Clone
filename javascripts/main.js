@@ -21,8 +21,7 @@
   Nimbus.Auth.set_app_ready(function() {
     if (Nimbus.Auth.authorized) {
       localStorage["user_email"] = window.user_email;
-      Post.sync_all();
-      return Comment.sync_all();
+      return window.Post.sync_all();
     } else {
 
     }
