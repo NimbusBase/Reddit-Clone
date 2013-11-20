@@ -14,9 +14,20 @@
 
   Nimbus.Auth.setup(syncInfo);
 
-  window.Post = Nimbus.Model.setup("Post", ["title", "link", "category"]);
+  window.Post = Nimbus.Model.setup("Post", ["title", "link", "category", "create_time"]);
 
   window.Comment = Nimbus.Model.setup("Comment", ["postid", "comment"]);
+
+  window.Post.ordersort = function(a, b) {
+    var x, y;
+    x = Date(a.create_time);
+    y = Date(b.create_time);
+    if (x < y) {
+      return -1;
+    } else {
+      return 1;
+    }
+  };
 
   Nimbus.Auth.set_app_ready(function() {
     if (Nimbus.Auth.authorized) {
@@ -29,7 +40,7 @@
   });
 
   window.Login_out = function() {
-    if (Nimbus.Auth.authorized) {
+    if ((Nimbus.Auth.authorized != null) && Nimbus.Auth.authorized()) {
       Nimbus.Auth.logout();
       return window.location.reload();
     } else {
@@ -43,6 +54,7 @@
       "title": title,
       "category": null,
       "link": link,
+      "create_time": Date(),
       "owner": window.user_email
     };
     return window.Post.create(post);

@@ -31,9 +31,13 @@ $(document).ready(function() {
   window.bootPostAdd = function (){
     bootbox.prompt("Add new post", function(result) {                
           if (result === null) {                                             
-           // Example.show("Prompt dismissed");                              
-          } else {
-           alert(result);                 
+           // Example.show("Prompt dismissed");  
+
+          } else { 
+            if (result.title == ""  ||  result.link == "")
+              return alert("error");
+            window.addPost(result.title, result.link);
+                      
           }
         }); 
     }
@@ -66,7 +70,7 @@ $(document).ready(function() {
       
 
       //var posts.remove('')
-      var  a =window.Post.all();
+      var  a =window.Post.all().sort(window.Post.ordersort);
       for(var key in a){ 
        
         //If the post wasn't loaded before, render it.
@@ -198,30 +202,6 @@ $(document).ready(function() {
 
   
 
-
-//pop up
-window.add_post_popup= function (){
-    var options = {
-      buttons: {
-        confirm: {
-          text: 'post',
-          className: 'blue',
-          action: function(e) { 
-            if(e.input2.indexOf("http") < 0)
-              e.input2 ="http://" + e.input2;
-            window.addPost(e.input,e.input2); 
-            Apprise('close'); 
-            loadJSON();
-
-            
-          }
-        },
-      },
-      input: true,
-    };
-
-    Apprise('please input a link', options);
-  }
 
 
   //delete  popup

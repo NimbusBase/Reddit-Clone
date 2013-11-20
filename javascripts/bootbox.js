@@ -321,6 +321,7 @@ window.bootbox = window.bootbox || (function init($, undefined) {
     var dialog;
     var form;
     var input;
+    var input2;
     var shouldShow;
     var inputOptions;
 
@@ -339,7 +340,9 @@ window.bootbox = window.bootbox || (function init($, undefined) {
       className: "bootbox-prompt",
       buttons: createLabels("cancel", "confirm"),
       value: "",
-      inputType: "text"
+      inputType: "text",
+      placeholder:"Title",
+      placeholder2:"Link"
     };
 
     options = validateButtons(
@@ -362,13 +365,15 @@ window.bootbox = window.bootbox || (function init($, undefined) {
     };
 
     options.buttons.confirm.callback = function() {
-      var value;
-
+     
+      var p = {};
       switch (options.inputType) {
+       
         case "text":
         case "email":
         case "select":
-          value = input.val();
+          p.title = input.val();
+          p.link =input2.val();
           break;
 
         case "checkbox":
@@ -384,7 +389,8 @@ window.bootbox = window.bootbox || (function init($, undefined) {
           break;
       }
 
-      return options.callback(value);
+       
+      return options.callback(p);
     };
 
     options.show = false;
@@ -404,11 +410,12 @@ window.bootbox = window.bootbox || (function init($, undefined) {
 
     // create the input based on the supplied type
     input = $(templates.inputs[options.inputType]);
-
+    input2 = $(templates.inputs[options.inputType]); 
     switch (options.inputType) {
       case "text":
       case "email":
         input.val(options.value);
+        input2.val(options.value);
         break;
 
       case "select":
@@ -488,10 +495,14 @@ window.bootbox = window.bootbox || (function init($, undefined) {
 
     if (options.placeholder) {
       input.attr("placeholder", options.placeholder);
+       input2.attr("placeholder", options.placeholder2);
+
     }
 
     // now place it in our form
     form.append(input);
+    form.append("<br/>");
+    form.append(input2);
 
     form.on("submit", function(e) {
       e.preventDefault();
@@ -516,6 +527,15 @@ window.bootbox = window.bootbox || (function init($, undefined) {
 
     return dialog;
   };
+
+
+
+
+
+
+
+
+
 
   exports.dialog = function(options) {
     options = sanitize(options);

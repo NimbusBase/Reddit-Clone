@@ -31,8 +31,7 @@
 	<!-- CSS
   ================================================== -->
 	<link rel="stylesheet" href="stylesheets/base.css">
-	<link rel="stylesheet" href="stylesheets/layout.css">
-	<link rel="stylesheet" href="stylesheets/apprise-v2.css"> 
+	<link rel="stylesheet" href="stylesheets/layout.css"> 
 	<link rel="stylesheet" href="stylesheets/jquery-ui.css">
 
 	<link rel="stylesheet" href="stylesheets/bootstrap.min.css">
@@ -56,9 +55,7 @@
 
  	<!-- Ninmbus -->
  	<script src='javascripts/all.js'></script>
-   	<script src='javascripts/main.js'></script> 
-	<script src='javascripts/apprise-v2.js'></script>  
-	<script src='javascripts/jquery-ui.js'></script>
+   	<script src='javascripts/main.js'></script>   
 	<script src='javascripts/comment.js'></script>
 
 	<script src='javascripts/bootstrap.js'></script>
@@ -89,7 +86,8 @@
  					-->
 
 					{{#if canDelete }}
-					<a  id ="dialog-confirm" onclick="delete_popup('{{id}}');"> delete </a>
+					<a  id ="" onclick=""> edit  </a>|
+					<a  id ="" onclick="delete_popup('{{id}}');"> delete </a>
 					{{/if}}
  
 				</div>
@@ -136,8 +134,10 @@
 		<div class="container">
 			<h1 class="logo">
 				<strong>Redditate:</strong>
+				<!--
 				<span class="subreddit"><span class="title">TopNews</span> <span class="carrot"></span></span>
 				<span class="subreddit-heading">Pick a topic to view</span>
+				-->
 			</h1>
 			<span class="view-options">
 			<a id="loginfo" class="fullview"  href="" onclick="Login_out();">Login</a> -

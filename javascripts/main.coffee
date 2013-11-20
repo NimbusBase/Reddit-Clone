@@ -11,8 +11,18 @@ Nimbus.Auth.setup(syncInfo)
  
 
 #Model
-window.Post =  Nimbus.Model.setup("Post", ["title", "link", "category"])
+window.Post =  Nimbus.Model.setup("Post", ["title", "link", "category","create_time"])
 window.Comment = Nimbus.Model.setup("Comment", ["postid", "comment"])
+
+
+window.Post.ordersort = (a,b)->
+	x = Date(a.create_time);
+	y = Date(b.create_time);
+	if( x < y)
+		return -1
+	else
+		return 1
+
 #Sync  
 Nimbus.Auth.set_app_ready(()->
 	if Nimbus.Auth.authorized
@@ -26,7 +36,8 @@ Nimbus.Auth.set_app_ready(()->
 )
 
 window.Login_out = ()->
-	if Nimbus.Auth.authorized 
+ 
+	if Nimbus.Auth.authorized?  && Nimbus.Auth.authorized()
 		Nimbus.Auth.logout()
 		return window.location.reload()
 	else
@@ -37,6 +48,7 @@ window.addPost = (title,link)->
 		"title":title
 		"category":null
 		"link":link
+		"create_time":Date()
 		"owner":window.user_email
 	window.Post.create(post)
 
