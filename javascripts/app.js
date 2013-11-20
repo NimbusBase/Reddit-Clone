@@ -27,6 +27,18 @@ $(document).ready(function() {
  
 
 
+
+  window.bootPostAdd = function (){
+    bootbox.prompt("Add new post", function(result) {                
+          if (result === null) {                                             
+           // Example.show("Prompt dismissed");                              
+          } else {
+           alert(result);                 
+          }
+        }); 
+    }
+
+
 //Initial Load -------------------------------------------------------------------------------
 
   window.scrollTo(0,0);
@@ -39,16 +51,20 @@ $(document).ready(function() {
       .addClass($.cookie("viewtype"));
   }
 
+
+
+  //login detect
+ 
   //Initial JSON load
   loadJSON();
 
   //JSON -------------------------------------------------------------------------------
 
-  // Load data
+  // Load data 
   function loadJSON() {
  //   $.getJSON("http://www.reddit.com/"+subdomain+".json?limit=2&after="+afterString+"&jsonp=?", null, function(data) {
       
-    
+
       //var posts.remove('')
       var  a =window.Post.all();
       for(var key in a){ 
@@ -527,6 +543,8 @@ window.add_post_popup= function (){
     $('body').removeClass('subreddit-picker-open');
     $('.subreddit-picker').slideUp(250);
   }
+
+
 
 
 

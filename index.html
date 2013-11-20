@@ -34,6 +34,9 @@
 	<link rel="stylesheet" href="stylesheets/layout.css">
 	<link rel="stylesheet" href="stylesheets/apprise-v2.css"> 
 	<link rel="stylesheet" href="stylesheets/jquery-ui.css">
+
+	<link rel="stylesheet" href="stylesheets/bootstrap.min.css">
+
 	<!--
 	<link rel="stylesheet" href="stylesheets/comment.css">
  	-->
@@ -57,6 +60,9 @@
 	<script src='javascripts/apprise-v2.js'></script>  
 	<script src='javascripts/jquery-ui.js'></script>
 	<script src='javascripts/comment.js'></script>
+
+	<script src='javascripts/bootstrap.js'></script>
+	<script src='javascripts/bootbox.js'></script>
 	<!-- HTML template for post
 	================================================== -->
 	<script id="postTemplate" type="text/x-handlebars-template">
@@ -134,8 +140,8 @@
 				<span class="subreddit-heading">Pick a topic to view</span>
 			</h1>
 			<span class="view-options">
-			<a class="fullview"  href="" onclick="Nimbus.Auth.authorize('GCloud');">Login</a> /
-			<a class="fullview"  href=""  id="add_post2"  onclick="window.add_post_popup();">Post</a> /
+			<a id="loginfo" class="fullview"  href="" onclick="Login_out();">Login</a> -
+			<a class="fullview"  href=""  id="add_post2"  onclick="bootPostAdd();">Post</a> |
 				<a class="fullview" data-viewtype="fullview" href="#">Fullview</a> /
 				<a class="listview" data-viewType="listview" href="#">Listview</a>
 				<!-- <a class="gridview" data-viewType="gridview" href="#">Gridview</a> -->

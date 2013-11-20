@@ -17,12 +17,20 @@ window.Comment = Nimbus.Model.setup("Comment", ["postid", "comment"])
 Nimbus.Auth.set_app_ready(()->
 	if Nimbus.Auth.authorized
 		localStorage["user_email"] = window.user_email
-		 
+		$("#loginfo").html("Logout") ;
+
 		window.Post.sync_all()
 		 
 	else
 	##	Nimbus.Auth.authorize("GCloud")
 )
+
+window.Login_out = ()->
+	if Nimbus.Auth.authorized 
+		Nimbus.Auth.logout()
+		return window.location.reload()
+	else
+	 	Nimbus.Auth.authorize('GCloud');
 
 window.addPost = (title,link)->
 	post =
