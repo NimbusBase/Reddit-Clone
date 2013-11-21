@@ -72,26 +72,28 @@
 				</h2>
 				<div class="metadata">
 					by {{owner}}  |
-					<!--
-					<a class="permalink" href="#" target="_blank"> comments</a>|
-					
-					<a href="#" onclick="slidedown_showHide('box1');return false;">Try it</a></div>
-	<div class="dhtmlgoodies_mrcBox" id="box1">
-		<div class="dhtmlgoodies_mrc" id="subBox1">		 
-			This is comment1<br>
-			This is comment2<br>
-			This is comment3<br>
-			This is comment4<br> 
-		</div>
- 					-->
+				 
 
 					{{#if canDelete }}
-					<a  id ="" onclick="bootPostEdit('{{id}}');"> edit</a>|
-					<a  id ="" onclick="bootPostDelete('{{id}}');"> delete </a>
+					<a  id ="" onclick="bootPostEdit('{{id}}');"> edit    </a>|
+					<a  id ="" onclick="bootPostDelete('{{id}}');"> delete    </a>|
 					{{/if}}
- 
+					<a  onclick="showComents('comment_{{id}}');"> comments </a>
+					
 				</div>
-			
+				
+
+				<div class="foldout"  id ="comment_{{id}}">
+ 						 <p>This is comment1.</p>
+ 						 <p>This is comment2.</p>
+ 						 <p>This is comment3.</p>
+ 						 <p>This is comment4.</p>
+ 						 <p>This is comment5.</p>
+ 						 <p>This is comment6.</p>
+ 						 <p>This is comment7.</p>
+ 				</div>
+
+
 			</div>
 		</div>
 	</script>

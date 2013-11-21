@@ -67,6 +67,14 @@ $(document).ready(function() {
         },id); 
     };
 
+  window.showComents = function(id){
+     var className = $('#'+id).attr('class');
+     if(className == "foldout")
+      $('#'+id).attr('class', "foldout2");
+     else
+      $('#'+id).attr('class', "foldout");
+  }
+
 //Initial Load -------------------------------------------------------------------------------
 
   window.scrollTo(0,0);
@@ -554,18 +562,18 @@ $(document).ready(function() {
 
 
   //Spinner -------------------------------------------------------------------------------
-  var optsWash = {
-    width: 2 // The line thickness
-  },
-  optsButton = {
-    width: 2, // The line thickness
-    radius: 6,
-    length: 4
-  },
-  targetWash = document.getElementById('loading'),
-  targetButton = document.getElementById('spinner'),
-  spinnerWash = new Spinner(optsWash).spin(targetWash),
-  spinnerButton = new Spinner(optsButton).spin(targetButton);
+  // var optsWash = {
+  //   width: 2 // The line thickness
+  // },
+  // optsButton = {
+  //   width: 2, // The line thickness
+  //   radius: 6,
+  //   length: 4
+  // },
+  // targetWash = document.getElementById('loading'),
+  // targetButton = document.getElementById('spinner'),
+  // spinnerWash = new Spinner(optsWash).spin(targetWash),
+  // spinnerButton = new Spinner(optsButton).spin(targetButton);
 
 });
 
