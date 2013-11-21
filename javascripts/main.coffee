@@ -52,6 +52,15 @@ window.addPost = (title,link)->
 		"owner":window.user_email
 	window.Post.create(post)
 
+window.EditPost = (id,title,link)->
+	p = Post.find(id)
+	p.title = title
+	p.link = link
+	p.save()
+
+
+
+
 window.addComment = (postid,comment)->
 	newcomment =
 		"postid":postid

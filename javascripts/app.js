@@ -40,8 +40,32 @@ $(document).ready(function() {
                       
           }
         }); 
-    }
+    };
 
+  window.bootPostDelete = function(id){
+    bootbox.confirm("Are you sure?", function(result) {
+        if(result == true){
+          p = Post.find(id); 
+          p.destroy();
+        }
+    }); 
+  };
+
+  window.bootPostEdit= function (id){
+
+    bootbox.prompt("Edit  post", function(result) {                
+          if (result === null) {                                             
+           // Example.show("Prompt dismissed");  
+
+          } else { 
+            if (result.title == ""  ||  result.link == "")
+              return alert("error");
+     
+            window.EditPost(id,result.title, result.link);
+                      
+          }
+        },id); 
+    };
 
 //Initial Load -------------------------------------------------------------------------------
 

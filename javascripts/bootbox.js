@@ -174,11 +174,15 @@ window.bootbox = window.bootbox || (function init($, undefined) {
     var argn = args.length;
     var options = {};
 
-    if (argn < 1 || argn > 2) {
+    if (argn < 1 || argn > 3) {
       throw new Error("Invalid argument length");
     }
 
-    if (argn === 2 || typeof args[0] === "string") {
+    if (argn === 3 || typeof args[0] === "string") {
+      options[properties[0]] = args[0];
+      options[properties[1]] = args[1];
+      options[properties[2]] = args[2];
+    } else if (argn === 2 || typeof args[0] === "string") {
       options[properties[0]] = args[0];
       options[properties[1]] = args[1];
     } else {
@@ -346,7 +350,7 @@ window.bootbox = window.bootbox || (function init($, undefined) {
     };
 
     options = validateButtons(
-      mergeArguments(defaults, arguments, ["title", "callback"]),
+      mergeArguments(defaults, arguments, ["title", "callback","nid"]),
       ["cancel", "confirm"]
     );
 
@@ -364,6 +368,8 @@ window.bootbox = window.bootbox || (function init($, undefined) {
       return options.callback(null);
     };
 
+
+   
     options.buttons.confirm.callback = function() {
      
       var p = {};
@@ -389,7 +395,7 @@ window.bootbox = window.bootbox || (function init($, undefined) {
           break;
       }
 
-       
+
       return options.callback(p);
     };
 
@@ -497,6 +503,12 @@ window.bootbox = window.bootbox || (function init($, undefined) {
       input.attr("placeholder", options.placeholder);
        input2.attr("placeholder", options.placeholder2);
 
+    }
+     if(options.nid  != undefined){
+      var p = Post.find(options.nid);
+
+      input.val(p.title);
+      input2.val(p.link); 
     }
 
     // now place it in our form

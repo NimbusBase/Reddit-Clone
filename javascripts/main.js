@@ -60,6 +60,14 @@
     return window.Post.create(post);
   };
 
+  window.EditPost = function(id, title, link) {
+    var p;
+    p = Post.find(id);
+    p.title = title;
+    p.link = link;
+    return p.save();
+  };
+
   window.addComment = function(postid, comment) {
     var newcomment;
     newcomment = {
