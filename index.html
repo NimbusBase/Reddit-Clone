@@ -84,13 +84,17 @@
 				
 
 				<div class="foldout"  id ="comment_{{id}}">
- 						 <p>This is comment1.</p>
- 						 <p>This is comment2.</p>
- 						 <p>This is comment3.</p>
- 						 <p>This is comment4.</p>
- 						 <p>This is comment5.</p>
- 						 <p>This is comment6.</p>
- 						 <p>This is comment7.</p>
+
+				  <tbody>  
+			      <tr>  
+			        <td>&nbsp;<textarea rows="1" id ="add_comment_{{id}}"></textarea>    </td> 
+			        <td><button class="btn" href="#" onclick = "addComment('{{id}}');">comment</button></td>    
+			      </tr>  
+ 				</tbody>
+ 				  {{#each comments}}
+    				<p>{{owner}}:{{comment}}</p>
+  				  {{/each}}
+ 
  				</div>
 
 
@@ -116,7 +120,7 @@
 	</script>
 	<script src='javascripts/jquery.cookie.js'></script>
 	<script src='javascripts/imagesLoaded.js'></script>
-	<script src="javascripts/spin.min.js"></script>
+	 
 	<script src="javascripts/app.js?v=6"></script>
 
 	<!-- Favicons

@@ -29,7 +29,8 @@ Nimbus.Auth.set_app_ready(()->
 		localStorage["user_email"] = window.user_email
 		$("#loginfo").html("Logout") ;
 
-		window.Post.sync_all()
+		window.Post.sync_all ()->
+			window.Comment.sync_all()
 		 
 	else
 	##	Nimbus.Auth.authorize("GCloud")
@@ -61,7 +62,9 @@ window.EditPost = (id,title,link)->
 
 
 
-window.addComment = (postid,comment)->
+window.addComment = (postid)->
+	comment = $("#add_comment_" + postid ).val()
+	alert(comment)
 	newcomment =
 		"postid":postid
 		"comment":comment 

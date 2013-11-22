@@ -102,7 +102,9 @@ $(document).ready(function() {
       
 
       //var posts.remove('')
+
       var  a =window.Post.all().sort(window.Post.ordersort);
+       
       for(var key in a){ 
        
         //If the post wasn't loaded before, render it.
@@ -115,6 +117,7 @@ $(document).ready(function() {
         if(t2 == t)
           post.canDelete = true;
 
+        post.comments= window.Comment.findAllByAttribute("postid",post.id);
 
    
        if(window.loadedPosts.indexOf(post.id) < 0) renderPost(post);
@@ -138,9 +141,9 @@ $(document).ready(function() {
 
       } else {
         if(lock == false) {
-          lock = true;
-          loader.fadeIn(100);
-          loadJSON();
+         // lock = true;
+          //loader.fadeIn(100);
+        //  loadJSON();
         }
       }
     }

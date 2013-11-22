@@ -33,7 +33,9 @@
     if (Nimbus.Auth.authorized) {
       localStorage["user_email"] = window.user_email;
       $("#loginfo").html("Logout");
-      return window.Post.sync_all();
+      return window.Post.sync_all(function() {
+        return window.Comment.sync_all();
+      });
     } else {
 
     }
@@ -68,8 +70,10 @@
     return p.save();
   };
 
-  window.addComment = function(postid, comment) {
-    var newcomment;
+  window.addComment = function(postid) {
+    var comment, newcomment;
+    comment = $("#add_comment_" + postid).val();
+    alert(comment);
     newcomment = {
       "postid": postid,
       "comment": comment,
