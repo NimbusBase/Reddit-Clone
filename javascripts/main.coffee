@@ -8,12 +8,17 @@ syncInfo =
     "project_id":"195693500289"       
  
 Nimbus.Auth.setup(syncInfo)
- 
+
+
+Nimbus.Auth.service = "GCloud"
+localStorage["app_name"] ="waiter-code-sample-bucket"
+window.folder = {"Post":"Post","Comment":"Comment"}
+
+
 
 #Model
 window.Post =  Nimbus.Model.setup("Post", ["title", "link", "category","create_time"])
 window.Comment = Nimbus.Model.setup("Comment", ["postid", "comment"])
-
 
 window.Post.ordersort = (a,b)->
 	x = Date(a.create_time);
@@ -33,6 +38,10 @@ Nimbus.Auth.set_app_ready(()->
 			window.Comment.sync_all()
 		 
 	else
+		alert("not auth")
+		window.Post.sync_all ()->
+			window.Comment.sync_all()
+
 	##	Nimbus.Auth.authorize("GCloud")
 )
 

@@ -14,6 +14,15 @@
 
   Nimbus.Auth.setup(syncInfo);
 
+  Nimbus.Auth.service = "GCloud";
+
+  localStorage["app_name"] = "waiter-code-sample-bucket";
+
+  window.folder = {
+    "Post": "Post",
+    "Comment": "Comment"
+  };
+
   window.Post = Nimbus.Model.setup("Post", ["title", "link", "category", "create_time"]);
 
   window.Comment = Nimbus.Model.setup("Comment", ["postid", "comment"]);
@@ -37,7 +46,10 @@
         return window.Comment.sync_all();
       });
     } else {
-
+      alert("not auth");
+      return window.Post.sync_all(function() {
+        return window.Comment.sync_all();
+      });
     }
   });
 

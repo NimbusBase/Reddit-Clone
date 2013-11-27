@@ -4030,8 +4030,7 @@
       var accessToken, xhr;
       if (!callback) {
         callback = function(resp) {
-          log("Read Complete ", resp);
-          return alert(resp);
+          return log("Read Complete ", resp);
         };
       }
       accessToken = gapi.auth.getToken().access_token;
@@ -4609,7 +4608,7 @@
       jsonp_call_back_name = "F" + jsonp_call_back_name;
       content = "";
       baseUrl = "https://storage.googleapis.com/" + this.BUCKET + "/" + url + "?alt=media&callback=?";
-      newurl = baseUrl + "&key=" + localStorage["api_key"] + "&access_token=" + gapi.auth.getToken().access_token;
+      newurl = baseUrl + "&key=" + localStorage["api_key"];
       if (!callback) {
         callback = function(resp) {
           return log("Read complete ", resp);
@@ -4621,9 +4620,6 @@
         dataType: "jsonp",
         jsonpCallback: jsonp_call_back_name,
         timeOut: 120000,
-        headers: {
-          "Authorization": "Bearer" + gapi.auth.getToken().access_token
-        },
         success: function(data) {
           content = JSON.stringify(data);
           callback(content);
@@ -5261,7 +5257,6 @@
         window.currently_syncing = true;
         converted = _this.fromCloudStructure(data);
         converted = data;
-        alert("cloud url converted", converted);
         x = _this.init(converted);
         x.synced = true;
         x.time = _this.cloudcache[object_id].time;
