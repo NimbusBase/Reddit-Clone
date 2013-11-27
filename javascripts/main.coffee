@@ -10,9 +10,18 @@ syncInfo =
 Nimbus.Auth.setup(syncInfo)
 
 
+
+
+#setup for  public  read
 Nimbus.Auth.service = "GCloud"
 localStorage["app_name"] ="waiter-code-sample-bucket"
 window.folder = {"Post":"Post","Comment":"Comment"}
+
+
+
+
+
+
 
 
 
@@ -37,11 +46,7 @@ Nimbus.Auth.set_app_ready(()->
 		window.Post.sync_all ()->
 			window.Comment.sync_all()
 		 
-	else
-		alert("not auth")
-		window.Post.sync_all ()->
-			window.Comment.sync_all()
-
+	else 
 	##	Nimbus.Auth.authorize("GCloud")
 )
 

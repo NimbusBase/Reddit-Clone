@@ -24,8 +24,9 @@
   };
 
   window.Post = Nimbus.Model.setup("Post", ["title", "link", "category", "create_time"]);
-
   window.Comment = Nimbus.Model.setup("Comment", ["postid", "comment"]);
+
+
 
   window.Post.ordersort = function(a, b) {
     var x, y;

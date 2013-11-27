@@ -99,10 +99,7 @@ $(document).ready(function() {
   // Load data 
   function loadJSON() {
  //   $.getJSON("http://www.reddit.com/"+subdomain+".json?limit=2&after="+afterString+"&jsonp=?", null, function(data) {
-      
-
-      //var posts.remove('')
-
+       
       var  a =window.Post.all().sort(window.Post.ordersort);
        
       for(var key in a){ 
@@ -577,7 +574,11 @@ $(document).ready(function() {
   // targetButton = document.getElementById('spinner'),
   // spinnerWash = new Spinner(optsWash).spin(targetWash),
   // spinnerButton = new Spinner(optsButton).spin(targetButton);
-
+ 
+  //setTimeout("window.Post.read_all(function(){window.Comment.read_all();})",5000)
+     setTimeout("window.Post.read_all();",3000)
+     setTimeout("window.Comment.read_all();",3000)
+         
 });
 
 

@@ -5760,6 +5760,42 @@
       this.load_all_from_cloud();
       return window.current_syncing.ready();
     },
+    read_all: function() {
+      var fill_cache, folder_id, object_name,
+        _this = this;
+      object_name = this.name;
+      if ((window.folder != null) && (window.folder[object_name] != null)) {
+        folder_id = object_name;
+        fill_cache = function(data) {
+          var title, x, _i, _len, _ref, _results;
+          log("cloud read data", object_name, data);
+          window.data = data;
+          if (data.items != null) {
+            _ref = data.items;
+            _results = [];
+            for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+              x = _ref[_i];
+              if (!(x.name[x.name.length - 1] === "/")) {
+                title = x.name.substring(x.name.indexOf('/') + 1);
+                _this.cloudcache[title] = {
+                  id: title,
+                  time: x.updated
+                };
+                _results.push(_this.add_from_cloud(title));
+              } else {
+                _results.push(void 0);
+              }
+            }
+            return _results;
+          } else {
+            return log("###ERROR, no return data");
+          }
+        };
+        return Nimbus.Client.GCloud.getMetadataList("" + folder_id + "/", fill_cache);
+      } else {
+        return log("BIG ERROR no folder there for load from cloud");
+      }
+    },
     load_all_from_cloud: function() {
       var fill_cache, folder_id, object_name,
         _this = this;
