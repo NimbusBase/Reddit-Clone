@@ -101,7 +101,8 @@ $(document).ready(function() {
  //   $.getJSON("http://www.reddit.com/"+subdomain+".json?limit=2&after="+afterString+"&jsonp=?", null, function(data) {
        
       var  a =window.Post.all().sort(window.Post.ordersort);
-       
+
+
       for(var key in a){ 
        
         //If the post wasn't loaded before, render it.
@@ -110,13 +111,30 @@ $(document).ready(function() {
         
         var t = JSON.stringify(post.owner);
         var t2 =JSON.stringify(localStorage["user_email"]);
+        
+
        
         if(t2 == t)
           post.canDelete = true;
 
         post.comments= window.Comment.findAllByAttribute("postid",post.id);
+        upVotes = window.UpVote.findAllByAttribute('postid',post.id); 
+        downVotes = window.DownVote.findAllByAttribute('postid',post.id); 
 
-   
+        post.upVoteCount =  upVotes.length;
+        post.downVoteCount = downVotes.length;
+        
+        post.upVoteByMe = false;
+        for(i in  upVotes){
+          if (i.voter  === window.user_email){
+             post.upVoteByMe = true;
+
+          }
+        }
+
+       
+       
+
        if(window.loadedPosts.indexOf(post.id) < 0) renderPost(post);
   
         //Save the post id.

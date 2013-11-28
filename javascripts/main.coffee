@@ -28,6 +28,8 @@ window.folder = {"Post":"Post","Comment":"Comment"}
 #Model
 window.Post =  Nimbus.Model.setup("Post", ["title", "link", "category","create_time"])
 window.Comment = Nimbus.Model.setup("Comment", ["postid", "comment","name"])
+window.UpVote =  Nimbus.Model.setup("UpVote", ["postid", "voter"])
+window.DownVote =  Nimbus.Model.setup("DownVote", ["postid", "voter"])
 
 window.Post.ordersort = (a,b)->
 	x = Date(a.create_time);
@@ -56,7 +58,6 @@ Nimbus.Auth.set_app_ready(()->
 					setTimeout("window.location.reload();",3000)
 				if   localStorage["Comment_count"] <  window.Comment.all().length
 				    setTimeout("window.location.reload();",3000)
-				
 )
 
 window.Login_out = ()->
@@ -95,4 +96,17 @@ window.addComment = (postid)->
 		"name" :window.user_name
 	window.Comment.create(newcomment)
 
+
+window.addUpVote = (postid)-> 
+	newUpVote =
+		"postid":postid 
+		"voter":window.user_email 
+	window.UpVote.create(newUpVote)
+
  
+
+window.addDownVote = (postid)-> 
+	newDownVote =
+		"postid":postid 
+		"voter":window.user_email 
+	window.DownVote.create(newDownVote)

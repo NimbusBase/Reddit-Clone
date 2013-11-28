@@ -6219,7 +6219,7 @@
         if (service === "GCloud") {
           localStorage["project_id"] = x.project_id;
           localStorage["api_key"] = x.api_key;
-          user_email_scope = 'https://www.googleapis.com/auth/userinfo.profile';
+          user_email_scope = 'https://www.googleapis.com/auth/userinfo.profile https://www.googleapis.com/auth/userinfo.email';
           if (isArray(x.scope)) {
             if (__indexOf.call(x.scope, user_email_scope) < 0) {
               x.scope.push(user_email_scope);

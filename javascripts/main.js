@@ -27,6 +27,10 @@
 
   window.Comment = Nimbus.Model.setup("Comment", ["postid", "comment", "name"]);
 
+  window.UpVote = Nimbus.Model.setup("UpVote", ["postid", "voter"]);
+
+  window.DownVote = Nimbus.Model.setup("DownVote", ["postid", "voter"]);
+
   window.Post.ordersort = function(a, b) {
     var x, y;
     x = Date(a.create_time);
@@ -101,6 +105,24 @@
       "name": window.user_name
     };
     return window.Comment.create(newcomment);
+  };
+
+  window.addUpVote = function(postid) {
+    var newUpVote;
+    newUpVote = {
+      "postid": postid,
+      "voter": window.user_email
+    };
+    return window.UpVote.create(newUpVote);
+  };
+
+  window.addDownVote = function(postid) {
+    var newDownVote;
+    newDownVote = {
+      "postid": postid,
+      "voter": window.user_email
+    };
+    return window.DownVote.create(newDownVote);
   };
 
 }).call(this);
