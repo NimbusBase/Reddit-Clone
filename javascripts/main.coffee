@@ -39,7 +39,7 @@ window.Post.ordersort = (a,b)->
 
 #Sync  
 Nimbus.Auth.set_app_ready(()->
-	if Nimbus.Auth.authorized
+	if Nimbus.Auth.authorized is  true
 		localStorage["user_email"] = window.user_email
 		$("#loginfo").html("Logout") ;
 
@@ -47,7 +47,15 @@ Nimbus.Auth.set_app_ready(()->
 			window.Comment.sync_all()
 		 
 	else 
-	##	Nimbus.Auth.authorize("GCloud")
+		localStorage["Post_count"] = window.Post.all().length 
+		localStorage["Comment_count"]  =  window.Comment.all().length
+		window.Post.sync_all  ()->
+			window.Comment.sync_all ()->
+				if  localStorage["Post_count"] <  window.Post.all().length 
+					window.location.reload();
+				if   localStorage["Comment_count"] <  window.Comment.all().length
+				    window.location.reload();
+				
 )
 
 window.Login_out = ()->

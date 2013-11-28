@@ -576,8 +576,10 @@ $(document).ready(function() {
   // spinnerButton = new Spinner(optsButton).spin(targetButton);
  
   //setTimeout("window.Post.read_all(function(){window.Comment.read_all();})",5000)
-     setTimeout("window.Post.read_all();",3000)
-     setTimeout("window.Comment.read_all();",3000)
+
+  
+     // setTimeout("window.Post.read_all();",3000)
+     // setTimeout("window.Comment.read_all();",3000)
          
 });
 

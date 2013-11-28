@@ -24,9 +24,8 @@
   };
 
   window.Post = Nimbus.Model.setup("Post", ["title", "link", "category", "create_time"]);
+
   window.Comment = Nimbus.Model.setup("Comment", ["postid", "comment"]);
-
-
 
   window.Post.ordersort = function(a, b) {
     var x, y;
@@ -40,16 +39,27 @@
   };
 
   Nimbus.Auth.set_app_ready(function() {
-    if (Nimbus.Auth.authorized) {
+    if (Nimbus.Auth.authorized === true) {
       localStorage["user_email"] = window.user_email;
       $("#loginfo").html("Logout");
       return window.Post.sync_all(function() {
         return window.Comment.sync_all();
       });
     } else {
-      alert("not auth");
+      localStorage["Post_count"] = window.Post.all().length;
+      localStorage["Comment_count"] = window.Comment.all().length;
       return window.Post.sync_all(function() {
-        return window.Comment.sync_all();
+        return window.Comment.sync_all(function() {
+          if (localStorage["Post_count"] < window.Post.all().length) {
+            window.location.reload();
+          }
+          if (localStorage["Comment_count"] < window.Comment.all().length) {
+            window.location.reload();
+          }
+          if (localStorage["Post"] === null) {
+            return window.location.reload();
+          }
+        });
       });
     }
   });

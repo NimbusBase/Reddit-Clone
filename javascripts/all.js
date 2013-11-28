@@ -14,7 +14,10 @@
     console.log("loaded CALLED");
     window.loaded = true;
     if (window.gdrive_initialized) {
-      return Nimbus.Auth.initialize();
+      Nimbus.Auth.initialize();
+    }
+    if (Nimbus.Auth.service === "GCloud") {
+      return Nimbus.Auth.app_ready_func();
     }
   };
 
@@ -4708,8 +4711,11 @@
     getMetadataList: function(query, callback) {
       var params;
       log("in  listFile  FUNC");
+      if (this.BUCKET === void 0) {
+        this.BUCKET = localStorage["app_name"];
+      }
       params = {
-        path: "/storage/v1beta2/b/" + this.BUCKET + "/o",
+        path: "/storage/v1beta2/b/" + Nimbus.Client.GCloud.BUCKET + "/o",
         method: "GET",
         params: {
           prefix: query
@@ -5760,7 +5766,7 @@
       this.load_all_from_cloud();
       return window.current_syncing.ready();
     },
-    read_all: function() {
+    read_all: function(cb) {
       var fill_cache, folder_id, object_name,
         _this = this;
       object_name = this.name;
