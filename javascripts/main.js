@@ -82,7 +82,7 @@
   window.addComment = function(postid) {
     var comment, newcomment;
     comment = $("#add_comment_" + postid).val();
-    alert(comment);
+    $("#add_comment_" + postid).val("");
     newcomment = {
       "postid": postid,
       "comment": comment,

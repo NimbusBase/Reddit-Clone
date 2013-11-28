@@ -86,7 +86,7 @@ window.EditPost = (id,title,link)->
 
 window.addComment = (postid)->
 	comment = $("#add_comment_" + postid ).val()
-	alert(comment)
+	$("#add_comment_" + postid ).val("")
 	newcomment =
 		"postid":postid
 		"comment":comment 
