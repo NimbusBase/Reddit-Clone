@@ -486,7 +486,7 @@ h2 a {
 	margin-left:10px;
 	margin-right:auto;
 	margin-bottom:12px;
-	font-size:20px;
+	font-size:17px;
 	border:thin white solid;
 	border-radius:8px;
 	overflow: hidden; /*---------------------------------------  hides the text outside of the div------*/
@@ -498,7 +498,7 @@ h2 a {
 	-o-transition: max-height 1s, background-color 1s;          /* Opera */
 }
 .foldout p{
-	margin:10px 10px 10px 10px; /*gives the text a little elbow room*/
+	margin:1px 5px 5px 5px; /*gives the text a little elbow room*/
 
 } 
 
@@ -512,7 +512,7 @@ h2 a {
 	margin-bottom:12px;
 	border:thin white solid;
 	border-radius:8px;
-	font-size:20px;
+	font-size:17px;
 	overflow: hidden; /*---------------------------------------  hides the text outside of the div------*/
 	background-color:white;  /*----------------------------------sets the resting background color----*/
 /* ------------  below are the actual transition functions for each browser ---------------------------------*/
@@ -522,6 +522,6 @@ h2 a {
 	-o-transition: max-height 1s, background-color 1s;          /* Opera */
 }
 .foldout2 p{
-	margin:10px 10px 10px 10px; /*gives the text a little elbow room*/
+	margin:1px 5px 5px 5px; /*gives the text a little elbow room*/
 
 }

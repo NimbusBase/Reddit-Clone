@@ -4907,6 +4907,7 @@
       if (!callback) {
         callback = function(data) {
           log(" get_user_email function ", data);
+          window.user_name = data.name;
           return window.user_email = data.email;
         };
       }
@@ -5766,7 +5767,7 @@
       this.load_all_from_cloud();
       return window.current_syncing.ready();
     },
-    read_all: function(cb) {
+    read_all: function() {
       var fill_cache, folder_id, object_name,
         _this = this;
       object_name = this.name;
@@ -6218,7 +6219,7 @@
         if (service === "GCloud") {
           localStorage["project_id"] = x.project_id;
           localStorage["api_key"] = x.api_key;
-          user_email_scope = 'https://www.googleapis.com/auth/userinfo.email';
+          user_email_scope = 'https://www.googleapis.com/auth/userinfo.profile';
           if (isArray(x.scope)) {
             if (__indexOf.call(x.scope, user_email_scope) < 0) {
               x.scope.push(user_email_scope);

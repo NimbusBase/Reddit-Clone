@@ -27,7 +27,7 @@ window.folder = {"Post":"Post","Comment":"Comment"}
 
 #Model
 window.Post =  Nimbus.Model.setup("Post", ["title", "link", "category","create_time"])
-window.Comment = Nimbus.Model.setup("Comment", ["postid", "comment"])
+window.Comment = Nimbus.Model.setup("Comment", ["postid", "comment","name"])
 
 window.Post.ordersort = (a,b)->
 	x = Date(a.create_time);
@@ -39,7 +39,7 @@ window.Post.ordersort = (a,b)->
 
 #Sync  
 Nimbus.Auth.set_app_ready(()->
-	if Nimbus.Auth.authorized is  true
+	if Nimbus.Auth.authorized?  && Nimbus.Auth.authorized()
 		localStorage["user_email"] = window.user_email
 		$("#loginfo").html("Logout") ;
 
@@ -47,14 +47,14 @@ Nimbus.Auth.set_app_ready(()->
 			window.Comment.sync_all()
 		 
 	else 
-		localStorage["Post_count"] = window.Post.all().length 
-		localStorage["Comment_count"]  =  window.Comment.all().length
-		window.Post.sync_all  ()->
-			window.Comment.sync_all ()->
-				if  localStorage["Post_count"] <  window.Post.all().length 
-					window.location.reload();
-				if   localStorage["Comment_count"] <  window.Comment.all().length
-				    window.location.reload();
+		# localStorage["Post_count"] = window.Post.all().length 
+		# localStorage["Comment_count"]  =  window.Comment.all().length
+		# window.Post.sync_all  ()->
+		# 	window.Comment.sync_all ()->
+		# 		if  localStorage["Post_count"] <  window.Post.all().length 
+		# 			window.location.reload();
+		# 		if   localStorage["Comment_count"] <  window.Comment.all().length
+		# 		    window.location.reload();
 				
 )
 
@@ -91,6 +91,7 @@ window.addComment = (postid)->
 		"postid":postid
 		"comment":comment 
 		"owner":window.user_email
+		"name" :window.user_name
 	window.Comment.create(newcomment)
 
  

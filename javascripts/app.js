@@ -145,14 +145,14 @@ $(document).ready(function() {
       }
     }
     //Control activePost value based on scroll position
-    if($(document).scrollTop() > (post.eq(activePost).offset().top-90)) {
-      activePost++
-    }
-    if($(document).scrollTop() < (post.eq(activePost-1).offset().top-90)) {
-      if(activePost-1 > 0) {
-        activePost--
-      }
-    }
+    // if($(document).scrollTop() > (post.eq(activePost).offset().top-90)) {
+    //   activePost++
+    // }
+    // if($(document).scrollTop() < (post.eq(activePost-1).offset().top-90)) {
+    //   if(activePost-1 > 0) {
+    //     activePost--
+    //   }
+    // }
     // console.log("activePost: "+activePost+", documentScrollTop: "+$(document).scrollTop()+", activePost offset top: "+(post.eq(activePost).offset().top-90))
   });
 
