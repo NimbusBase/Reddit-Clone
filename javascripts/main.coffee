@@ -46,15 +46,16 @@ Nimbus.Auth.set_app_ready(()->
 		window.Post.sync_all ()->
 			window.Comment.sync_all()
 		 
-	else 
-		# localStorage["Post_count"] = window.Post.all().length 
-		# localStorage["Comment_count"]  =  window.Comment.all().length
-		# window.Post.sync_all  ()->
-		# 	window.Comment.sync_all ()->
-		# 		if  localStorage["Post_count"] <  window.Post.all().length 
-		# 			window.location.reload();
-		# 		if   localStorage["Comment_count"] <  window.Comment.all().length
-		# 		    window.location.reload();
+	else if not (localStorage["state"] is "Auth")
+	 
+		localStorage["Post_count"] = window.Post.all().length 
+		localStorage["Comment_count"]  =  window.Comment.all().length
+		window.Post.sync_all  ()->
+			window.Comment.sync_all ()->
+				if  localStorage["Post_count"] <  window.Post.all().length 
+					setTimeout("window.location.reload();",3000)
+				if   localStorage["Comment_count"] <  window.Comment.all().length
+				    setTimeout("window.location.reload();",3000)
 				
 )
 

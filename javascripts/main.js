@@ -45,8 +45,19 @@
       return window.Post.sync_all(function() {
         return window.Comment.sync_all();
       });
-    } else {
-
+    } else if (!(localStorage["state"] === "Auth")) {
+      localStorage["Post_count"] = window.Post.all().length;
+      localStorage["Comment_count"] = window.Comment.all().length;
+      return window.Post.sync_all(function() {
+        return window.Comment.sync_all(function() {
+          if (localStorage["Post_count"] < window.Post.all().length) {
+            setTimeout("window.location.reload();", 3000);
+          }
+          if (localStorage["Comment_count"] < window.Comment.all().length) {
+            return setTimeout("window.location.reload();", 3000);
+          }
+        });
+      });
     }
   });
 
