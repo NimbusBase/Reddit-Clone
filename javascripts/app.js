@@ -101,8 +101,8 @@ $(document).ready(function() {
  //   $.getJSON("http://www.reddit.com/"+subdomain+".json?limit=2&after="+afterString+"&jsonp=?", null, function(data) {
        
       var  a =window.Post.all().sort(window.Post.ordersort);
-
-
+      
+      
       for(var key in a){ 
        
         //If the post wasn't loaded before, render it.
@@ -116,6 +116,7 @@ $(document).ready(function() {
        
         if(t2 == t)
           post.canDelete = true;
+        
 
         post.comments= window.Comment.findAllByAttribute("postid",post.id);
         upVotes = window.UpVote.findAllByAttribute('postid',post.id); 

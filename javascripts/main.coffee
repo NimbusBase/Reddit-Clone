@@ -43,11 +43,33 @@ window.Post.ordersort = (a,b)->
 #############
 window.Redditate=angular.module("Redditate",[])
 .controller("RedditateControl", ($scope)->
-	window.Post.sync_all ()->
-		window.Comment.sync_all() 
-	$scope.post_data =  window.Post.all() 
 	 
+	$scope.login = "login"
+	
+	
+	
+	$scope.loginOut = ()->
+		if Nimbus.Auth.authorized()
+			Nimbus.Auth.logout()
+			$scope.loadData()
+		else 
+			Nimbus.Auth.authorize("GCloud")
+			$scope.loadData()
 
+
+			 
+	$scope.loadData = ()->
+		$scope.post_data = window.Post.all().sort(window.Post.ordersort)
+
+		for i in $scope.post_data
+			if(i.owner ==  localStorage["user_email"])
+				i.canDelete = true
+			else
+				i.canDelete = false 
+			# alert(i.canDelete) 
+			i.comments = window.Comment.findAllByAttribute("postid",i.id)
+
+	$scope.loadData()
 
 
 )
@@ -60,16 +82,15 @@ window.Redditate=angular.module("Redditate",[])
 
 
 #############
-
-
+ 
 
 #Sync  
-Nimbus.Auth.set_app_ready(()-> 
-	angular.bootstrap(document, ['Redditate']);
+Nimbus.Auth.set_app_ready(()->  
 
+   
 	if Nimbus.Auth.authorized?  && Nimbus.Auth.authorized()
 		localStorage["user_email"] = window.user_email
-		$("#loginfo").html("Logout") ;
+		$("#loginfo").html("Logout")
 
 		window.Post.sync_all ()->
 			window.Comment.sync_all()
@@ -80,10 +101,13 @@ Nimbus.Auth.set_app_ready(()->
 		localStorage["Comment_count"]  =  window.Comment.all().length
 		window.Post.sync_all  ()->
 			window.Comment.sync_all ()->
-				if  localStorage["Post_count"] <  window.Post.all().length 
-					setTimeout("window.location.reload();",3000)
-				if   localStorage["Comment_count"] <  window.Comment.all().length
-				    setTimeout("window.location.reload();",3000)
+				# if  localStorage["Post_count"] <  window.Post.all().length 
+				# 	setTimeout("window.location.reload();",3000)
+				# if   localStorage["Comment_count"] <  window.Comment.all().length
+				#     setTimeout("window.location.reload();",3000)
+
+	
+	angular.bootstrap(document.body, ['Redditate']);
 )
 
 window.Login_out = ()->
@@ -92,7 +116,7 @@ window.Login_out = ()->
 		Nimbus.Auth.logout()
 		return window.location.reload()
 	else
-	 	Nimbus.Auth.authorize('GCloud');
+	 
 
 window.addPost = (title,link)->
 	post =

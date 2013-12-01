@@ -43,34 +43,50 @@
   };
 
   window.Redditate = angular.module("Redditate", []).controller("RedditateControl", function($scope) {
-    window.Post.sync_all(function() {
-      return window.Comment.sync_all();
-    });
-    return $scope.post_data = window.Post.all();
+    $scope.login = "login";
+    $scope.loginOut = function() {
+      if (Nimbus.Auth.authorized()) {
+        Nimbus.Auth.logout();
+        return $scope.loadData();
+      } else {
+        Nimbus.Auth.authorize("GCloud");
+        return $scope.loadData();
+      }
+    };
+    $scope.loadData = function() {
+      var i, _i, _len, _ref, _results;
+      $scope.post_data = window.Post.all().sort(window.Post.ordersort);
+      _ref = $scope.post_data;
+      _results = [];
+      for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+        i = _ref[_i];
+        if (i.owner === localStorage["user_email"]) {
+          i.canDelete = true;
+        } else {
+          i.canDelete = false;
+        }
+        _results.push(i.comments = window.Comment.findAllByAttribute("postid", i.id));
+      }
+      return _results;
+    };
+    return $scope.loadData();
   });
 
   Nimbus.Auth.set_app_ready(function() {
-    angular.bootstrap(document, ['Redditate']);
     if ((Nimbus.Auth.authorized != null) && Nimbus.Auth.authorized()) {
       localStorage["user_email"] = window.user_email;
       $("#loginfo").html("Logout");
-      return window.Post.sync_all(function() {
+      window.Post.sync_all(function() {
         return window.Comment.sync_all();
       });
     } else if (!(localStorage["state"] === "Auth")) {
       localStorage["Post_count"] = window.Post.all().length;
       localStorage["Comment_count"] = window.Comment.all().length;
-      return window.Post.sync_all(function() {
-        return window.Comment.sync_all(function() {
-          if (localStorage["Post_count"] < window.Post.all().length) {
-            setTimeout("window.location.reload();", 3000);
-          }
-          if (localStorage["Comment_count"] < window.Comment.all().length) {
-            return setTimeout("window.location.reload();", 3000);
-          }
-        });
+      window.Post.sync_all(function() {
+        return window.Comment.sync_all(function() {});
       });
     }
+    return angular.bootstrap(document.body, ['Redditate']);
   });
 
   window.Login_out = function() {
@@ -78,7 +94,7 @@
       Nimbus.Auth.logout();
       return window.location.reload();
     } else {
-      return Nimbus.Auth.authorize('GCloud');
+
     }
   };
 
