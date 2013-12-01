@@ -11,7 +11,6 @@ Nimbus.Auth.setup(syncInfo)
 
 
 
-
 #setup for  public  read
 Nimbus.Auth.service = "GCloud"
 localStorage["app_name"] ="waiter-code-sample-bucket"
@@ -39,8 +38,35 @@ window.Post.ordersort = (a,b)->
 	else
 		return 1
 
+
+# angular  code
+#############
+window.Redditate=angular.module("Redditate",[])
+.controller("RedditateControl", ($scope)->
+	window.Post.sync_all ()->
+		window.Comment.sync_all() 
+	$scope.post_data =  window.Post.all() 
+	 
+
+
+
+)
+
+
+
+
+
+
+
+
+#############
+
+
+
 #Sync  
-Nimbus.Auth.set_app_ready(()->
+Nimbus.Auth.set_app_ready(()-> 
+	angular.bootstrap(document, ['Redditate']);
+
 	if Nimbus.Auth.authorized?  && Nimbus.Auth.authorized()
 		localStorage["user_email"] = window.user_email
 		$("#loginfo").html("Logout") ;
@@ -49,7 +75,7 @@ Nimbus.Auth.set_app_ready(()->
 			window.Comment.sync_all()
 		 
 	else if not (localStorage["state"] is "Auth")
-	 
+	 	
 		localStorage["Post_count"] = window.Post.all().length 
 		localStorage["Comment_count"]  =  window.Comment.all().length
 		window.Post.sync_all  ()->
@@ -110,3 +136,5 @@ window.addDownVote = (postid)->
 		"postid":postid 
 		"voter":window.user_email 
 	window.DownVote.create(newDownVote)
+
+

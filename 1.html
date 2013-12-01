@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="zh-cn" ng-app="ToDo">
+<head>
+    <meta charset="UTF-8">
+    <title>index</title>
+    
+   </head>
+<body ng-app ng-controller="ToDoControl"> 
+   
+value:<input type="text" id ="input_item" ng-model="input_val"/> <nbclick   > can click here</nbclick>  <button type="button" nbclick > or  Add here</button> 
+<hr/>
+index:<input type="text" id ="edit_item_index" ng-model="edit_index"/> 
+value:<input type="text" id ="edit_item" ng-model="edit_val"/> <button type="button" ng-click="editItem()">Edit</button>
+<hr/>
+index:<input type="text" id ="delete_item" ng-model="delete_index"/> <button type="button" ng-click="deleteItem()">Delete</button>
+<hr/>
+search:<input type="text" id ="search_item" ng-model="searchText"/>  
+
+
+
+<ul>
+<li ng-repeat="item in items |filter:searchText track by $index">
+					 {{item}}
+</li>
+</ul>
+</body>
+
+<!-- JS
+	================================================== -->
+	
+ 	<!-- Ninmbus -->
+
+	<script type="text/javascript" src="javascripts/angular.js"></script>
+ 	<script src='javascripts/all.js'></script>
+   	<script src='javascripts/main.js'></script>    
+
+   	<script src='javascripts/todo.js'></script>    
+
+</html>
+
+
+
+
+<!--
+- Get a tiny carrot next to the current post
+- Browser test
+- Future: Make domain clickable
+- Future: Click to comments opens in a modal
+ -->

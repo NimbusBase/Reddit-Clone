@@ -1,3 +1,4 @@
+
 <!--
 * Redditate
 * Copyright 2011, Dave Gamache
@@ -12,7 +13,7 @@
 <!--[if IE 7 ]><html class="ie ie7" lang="en"> <![endif]-->
 <!--[if IE 8 ]><html class="ie ie8" lang="en"> <![endif]-->
 <!--[if (gte IE 9)|!(IE)]><!--><html lang="en"> <!--<![endif]-->
-<head>
+<head ng-app >
 
 	<!-- Basic Page Needs
   ================================================== -->
@@ -52,8 +53,70 @@
 	<script src='//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js'></script>
 	<script src='javascripts/handlebars.1.0.0.beta.3.js'></script>
 
+
+	<!-- HTML template for post
+	================================================== 
+	-->
+	<script id="postTemplate" type="text/x-handlebars-template">
+		<div class="post" id="{{id}}"> 
+			<div class="content">
+				<h2 class="remove-bottom">
+					 
+					<a class="post-title" href="{{link}}" target="_blank">{{title}}</a>
+					<p 
+				</h2>
+				<div class="metadata">
+
+					<a   onclick="addUpVote('{{id}}');"> UP({{upVoteCount}})</a> |
+					<a  onclick="addDownVote('{{id}}');" >DOWN({{downVoteCount}})</a> |
+					by {{owner}}  |
+				 
+
+					{{#if canDelete }}
+					<a  id ="" onclick="bootPostEdit('{{id}}');"> edit    </a>|
+					<a  id ="" onclick="bootPostDelete('{{id}}');"> delete    </a>|
+					{{/if}}
+					<a  onclick="showComents('comment_{{id}}');"> comments </a>
+					
+				</div>
+				
+
+				<div class="foldout"  id ="comment_{{id}}">
+
+				  <tbody>  
+			      <tr>  
+			        <td>&nbsp;<textarea rows="1" id ="add_comment_{{id}}"></textarea>    </td> 
+			        <td><button class="btn" href="#" onclick = "addComment('{{id}}');">comment</button></td>    
+			      </tr>  
+ 				</tbody>
+ 				  {{#each comments}}
+    				<p>{{name}}: {{comment}}</p>
+    				<hr/>
+  				  {{/each}}
  
-	 
+ 				</div>
+
+
+			</div>
+		</div>
+	</script>
+	<script id="imgurAlbumTemplate" type="text/x-handlebars-template">
+		<ul id="album-{{cover}}" class="imgur-album">
+			{{#each images}}
+				<li>
+					<a class="image-embed">
+						<img src="images/grey.gif" data-src="{{links.large_thumbnail}}" alt="{{image.caption}}">
+					</a>
+					{{#if image.caption}}
+						<p class="imgur-caption">{{image.caption}}</p>
+					{{/if}}
+				</li>
+			{{/each}}
+			<li class="open-album-wrapper">
+				<a href="#" class="open-album" title="Album">View album</a>
+			</li>
+		</ul>
+	</script>
 	<script src='javascripts/jquery.cookie.js'></script>
 	<script src='javascripts/imagesLoaded.js'></script>
 	 
@@ -76,7 +139,7 @@
 		<div class="container">
 			<h1 class="logo">
 				<strong>Redditate:</strong>
-				 
+				<input type="text" id ="input_item" ng-model="post_data2"/>
 				<!--
 				<span class="subreddit"><span class="title">TopNews</span> <span class="carrot"></span></span>
 				<span class="subreddit-heading">Pick a topic to view</span>
@@ -144,82 +207,22 @@
 	</div>
 	<div class="main container">
 		
-		<div class="posts"> 
-		<div ng-repeat="post in post_data |filter:searchText track by $index" class="post" id="{{post.id}}" > 
-			<div class="content">
-				<h2 class="remove-bottom">
-					 
-					<a class="post-title" href={{post.link}} target="_blank">{{post.title}}</a>
-					<p <="" h2="">
-				</p><div class="metadata">
-				    <a   ng-click=""> UP()</a> |
-					<a  ng-click="" >DOWN( )</a> | 
-					by {{post.owner}}  |
-				<!--   
+		<div class="posts"></div>
 
-					{{#if canDelete }}
-					<a  id ="" onclick="bootPostEdit('{{id}}');"> edit    </a>|
-					<a  id ="" onclick="bootPostDelete('{{id}}');"> delete    </a>|
-					{{/if}}
-					<a  onclick="showComents('comment_{{post.id}}');"> comments </a>
-				 -->
-				</div>
-					<!-- 
-
-				<div class="foldout"  id ="comment_{{id}}">
-
-				  <tbody>  
-			      <tr>  
-			        <td>&nbsp;<textarea rows="1" id ="add_comment_{{id}}"></textarea>    </td> 
-			        <td><button class="btn" href="#" onclick = "addComment('{{id}}');">comment</button></td>    
-			      </tr>  
- 				</tbody>
- 				  {{#each comments}}
-    				<p>{{name}}: {{comment}}</p>
-    				<hr/>
-  				  {{/each}}
- 
- 				</div> -->
-
- 			</h2>
-			</div>
-		</div>		
+		
 
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-		</div> 
 		<div class="loadmore-button">
 			Load Next 25
 			<div id="spinner"></div>
 		</div>
 	</div>
 
-	<!-- <div class="wash">
+	<div class="wash">
 		<div id="loading"></div>
-	</div> -->
+	</div>
 
 	<form class="subreddit-shortcut">
 		<fieldset class="subreddit-input">
@@ -258,4 +261,4 @@
 - Browser test
 - Future: Make domain clickable
 - Future: Click to comments opens in a modal
- 
+ -->

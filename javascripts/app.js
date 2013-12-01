@@ -176,10 +176,10 @@ $(document).ready(function() {
 
   // Load more JSON from click (tablet/mobile)
   $('.loadmore-button').click(function() {
-    if(lock == false) {
-      loadMore.addClass('loading')
-      loadJSON();
-    }
+    // if(lock == false) {
+    //   loadMore.addClass('loading')
+    //   loadJSON();
+    // }
   });
 
   //Rendering -------------------------------------------------------------------------------
