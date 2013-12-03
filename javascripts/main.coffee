@@ -79,6 +79,7 @@ window.Redditate=angular.module("Redditate",[])
 		$scope.loadData()
 
 	$scope.bootPostDelete = (id)->
+		alert(id)
 		bootbox.confirm("Are you sure?", (result)->
 			if(result is true) 
 				p = window.Post.find(id)
@@ -93,7 +94,7 @@ window.Redditate=angular.module("Redditate",[])
 				alert("should not be  null")
 			else
 				EditPost(id,result.title, result.link)
-		)
+		,id)
 
 
 	$scope.showComment = (id)->

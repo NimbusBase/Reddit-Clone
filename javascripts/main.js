@@ -84,6 +84,7 @@
       return $scope.loadData();
     };
     $scope.bootPostDelete = function(id) {
+      alert(id);
       return bootbox.confirm("Are you sure?", function(result) {
         var p;
         if (result === true) {
@@ -102,7 +103,7 @@
         } else {
           return EditPost(id, result.title, result.link);
         }
-      });
+      }, id);
     };
     $scope.showComment = function(id) {
       var className;
