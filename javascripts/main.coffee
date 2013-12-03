@@ -104,6 +104,15 @@ window.Redditate=angular.module("Redditate",[])
       		$('#comment_'+id).attr('class', "foldout");
 
 
+    $scope.newComment=""
+
+    $scope.addComment  =(postid)->
+    	   
+    	window.addComment(postid,$scope.newComment)
+    	$scope.newComment=""
+
+
+
 
 
 
@@ -184,9 +193,8 @@ window.EditPost = (id,title,link)->
 
 
 
-window.addComment = (postid)->
-	comment = $("#add_comment_" + postid ).val()
-	$("#add_comment_" + postid ).val("")
+window.addComment = (postid,comment)->
+	comment = comment
 	newcomment =
 		"postid":postid
 		"comment":comment 

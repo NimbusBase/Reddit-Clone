@@ -108,10 +108,15 @@
       var className;
       className = $('#comment_' + id).attr('class');
       if (className === "foldout") {
-        return $('#comment_' + id).attr('class', "foldout2");
+        $('#comment_' + id).attr('class', "foldout2");
       } else {
-        return $('#comment_' + id).attr('class', "foldout");
+        $('#comment_' + id).attr('class', "foldout");
       }
+      $scope.newComment = "";
+      return $scope.addComment = function(postid) {
+        window.addComment(postid, $scope.newComment);
+        return $scope.newComment = "";
+      };
     };
     return $scope.ta = function() {
       return alert("hahaha");
@@ -164,10 +169,9 @@
     return p.save();
   };
 
-  window.addComment = function(postid) {
-    var comment, newcomment;
-    comment = $("#add_comment_" + postid).val();
-    $("#add_comment_" + postid).val("");
+  window.addComment = function(postid, comment) {
+    var newcomment;
+    comment = comment;
     newcomment = {
       "postid": postid,
       "comment": comment,
