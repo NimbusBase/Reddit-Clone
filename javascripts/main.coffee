@@ -96,6 +96,13 @@ window.Redditate=angular.module("Redditate",[])
 		)
 
 
+	$scope.showComment = (id)->
+		className = $('#comment_'+id).attr('class');
+		if(className is "foldout")
+      		$('#comment_'+id).attr('class', "foldout2");
+     	else
+      		$('#comment_'+id).attr('class', "foldout");
+
 
 
 

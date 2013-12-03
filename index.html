@@ -170,17 +170,15 @@
 					<a  ng-click = "bootPostDelete(post.id);" > delete    </a>|
 					</span>
 				 
-					<a  ng-click="" > comments </a>
+					<a  ng-click="showComment(post.id);" > comments({{post.comments.length}}) </a>
 				 
 				</div>
-					 
-
-				<div class="foldout2"  id ="comment_{{post.id}}">
-
+					  
+				<div class="foldout"  id ="comment_{{post.id}}"> 
 				  <tbody>  
 			      <tr>  
 			        <td>&nbsp;<textarea rows="1" id ="add_comment_{{post.id}}"></textarea>    </td> 
-			        <td><button class="btn" href="#" ng-click = "">comment</button></td>    
+			        <td><button class="btn" href="" ng-click ="">comment</button></td>    
 			      </tr>  
  				</tbody>
  				   

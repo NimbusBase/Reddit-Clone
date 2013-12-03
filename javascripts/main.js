@@ -104,6 +104,15 @@
         }
       });
     };
+    $scope.showComment = function(id) {
+      var className;
+      className = $('#comment_' + id).attr('class');
+      if (className === "foldout") {
+        return $('#comment_' + id).attr('class', "foldout2");
+      } else {
+        return $('#comment_' + id).attr('class', "foldout");
+      }
+    };
     return $scope.ta = function() {
       return alert("hahaha");
     };
