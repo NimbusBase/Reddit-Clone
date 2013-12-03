@@ -11,7 +11,11 @@
 <!--[if lt IE 7 ]><html class="ie ie6" lang="en"> <![endif]-->
 <!--[if IE 7 ]><html class="ie ie7" lang="en"> <![endif]-->
 <!--[if IE 8 ]><html class="ie ie8" lang="en"> <![endif]-->
-<!--[if (gte IE 9)|!(IE)]><!--><html lang="en"> <!--<![endif]-->
+<!--[if (gte IE 9)|!(IE)]><!-->
+
+<!-- <html lang="en" ng-app="Redditate">  -->
+
+<html lang="en" > 
 <head>
 
 	<!-- Basic Page Needs
@@ -76,15 +80,20 @@
 		<div class="container">
 			<h1 class="logo">
 				<strong>Redditate:</strong>
-				 
+				<!-- <a ng-controller = "RedditateControl2" >
+				{{login}}
+				</a>				
+				  -->
 				<!--
 				<span class="subreddit"><span class="title">TopNews</span> <span class="carrot"></span></span>
 				<span class="subreddit-heading">Pick a topic to view</span>
 				-->
 			</h1>
 			<span class="view-options">
-			<a id="loginfo" class="fullview"  href="" onclick="Login_out();">Login</a> -
-			<a class="fullview"  href=""  id="add_post2"  onclick="bootPostAdd();">Post</a> |
+			<a ng-click="loginOut()"   id="loginfo" class="fullview"  href="" >Login</a> -
+			
+ 
+			<a  class="fullview"  href=""  id="add_post2"  ng-click="bootPostAdd();">Post</a> |
 				<a class="fullview" data-viewtype="fullview" href="#">Fullview</a> /
 				<a class="listview" data-viewType="listview" href="#">Listview</a>
 				<!-- <a class="gridview" data-viewType="gridview" href="#">Gridview</a> -->
@@ -155,31 +164,31 @@
 				    <a   ng-click=""> UP()</a> |
 					<a  ng-click="" >DOWN( )</a> | 
 					by {{post.owner}}  |
-				<!--   
-
-					{{#if canDelete }}
-					<a  id ="" onclick="bootPostEdit('{{id}}');"> edit    </a>|
-					<a  id ="" onclick="bootPostDelete('{{id}}');"> delete    </a>|
-					{{/if}}
-					<a  onclick="showComents('comment_{{post.id}}');"> comments </a>
-				 -->
+				  
+  					<span ng-show ="post.canDelete">
+					<a  ng-click ="bootPostEdit(post.id);"  > edit    </a>|
+					<a  ng-click = "bootPostDelete(post.id);" > delete    </a>|
+					</span>
+				 
+					<a  ng-click="" > comments </a>
+				 
 				</div>
-					<!-- 
+					 
 
-				<div class="foldout"  id ="comment_{{id}}">
+				<div class="foldout2"  id ="comment_{{post.id}}">
 
 				  <tbody>  
 			      <tr>  
-			        <td>&nbsp;<textarea rows="1" id ="add_comment_{{id}}"></textarea>    </td> 
-			        <td><button class="btn" href="#" onclick = "addComment('{{id}}');">comment</button></td>    
+			        <td>&nbsp;<textarea rows="1" id ="add_comment_{{post.id}}"></textarea>    </td> 
+			        <td><button class="btn" href="#" ng-click = "">comment</button></td>    
 			      </tr>  
  				</tbody>
- 				  {{#each comments}}
-    				<p>{{name}}: {{comment}}</p>
-    				<hr/>
-  				  {{/each}}
- 
- 				</div> -->
+ 				   
+ 				  <div  ng-repeat="c in post.comments |filter:searchText track by $index" > 
+
+    				<p>{{c.name}}: {{c.comment}}</p>
+    				<hr/> 
+ 				</div> 
 
  			</h2>
 			</div>

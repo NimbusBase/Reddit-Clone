@@ -44,10 +44,7 @@ window.Post.ordersort = (a,b)->
 window.Redditate=angular.module("Redditate",[])
 .controller("RedditateControl", ($scope)->
 	 
-	$scope.login = "login"
-	
-	
-	
+	$scope.login = "login" 
 	$scope.loginOut = ()->
 		if Nimbus.Auth.authorized()
 			Nimbus.Auth.logout()
@@ -71,11 +68,55 @@ window.Redditate=angular.module("Redditate",[])
 
 	$scope.loadData()
 
+	$scope.bootPostAdd = ()->
+		bootbox.prompt("Add new post", (result)->
+			if result is null
+				return 
+			if ((result.title is null)  or  (result.link is null))
+				alert("should not be  null")
+			else
+				window.addPost(result.title, result.link))
+		$scope.loadData()
+
+	$scope.bootPostDelete = (id)->
+		bootbox.confirm("Are you sure?", (result)->
+			if(result is true) 
+				p = window.Post.find(id)
+				p.destroy()
+			return 
+		)
+	$scope.bootPostEdit = (id)->
+		bootbox.prompt("Edit  post",(result)->
+			if result is null
+				return 
+			if ((result.title is null)  or  (result.link is null))
+				alert("should not be  null")
+			else
+				EditPost(id,result.title, result.link)
+		)
+
+
+
+
+
+
+
+
+
+
+	$scope.ta = ()->
+		alert("hahaha")
 
 )
 
 
 
+
+# window.RedditateControl2 = ($scope)-> 
+# 	$scope.login = "321"
+# 	$scope.hi = ()->
+# 		alert "hi"
+# 	return  $scope
 
 
 
@@ -87,7 +128,7 @@ window.Redditate=angular.module("Redditate",[])
 #Sync  
 Nimbus.Auth.set_app_ready(()->  
 
-   
+   	
 	if Nimbus.Auth.authorized?  && Nimbus.Auth.authorized()
 		localStorage["user_email"] = window.user_email
 		$("#loginfo").html("Logout")

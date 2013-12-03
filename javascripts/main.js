@@ -69,7 +69,44 @@
       }
       return _results;
     };
-    return $scope.loadData();
+    $scope.loadData();
+    $scope.bootPostAdd = function() {
+      bootbox.prompt("Add new post", function(result) {
+        if (result === null) {
+          return;
+        }
+        if ((result.title === null) || (result.link === null)) {
+          return alert("should not be  null");
+        } else {
+          return window.addPost(result.title, result.link);
+        }
+      });
+      return $scope.loadData();
+    };
+    $scope.bootPostDelete = function(id) {
+      return bootbox.confirm("Are you sure?", function(result) {
+        var p;
+        if (result === true) {
+          p = window.Post.find(id);
+          p.destroy();
+        }
+      });
+    };
+    $scope.bootPostEdit = function(id) {
+      return bootbox.prompt("Edit  post", function(result) {
+        if (result === null) {
+          return;
+        }
+        if ((result.title === null) || (result.link === null)) {
+          return alert("should not be  null");
+        } else {
+          return EditPost(id, result.title, result.link);
+        }
+      });
+    };
+    return $scope.ta = function() {
+      return alert("hahaha");
+    };
   });
 
   Nimbus.Auth.set_app_ready(function() {
