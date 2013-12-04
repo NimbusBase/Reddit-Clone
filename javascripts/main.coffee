@@ -112,13 +112,14 @@ window.Redditate=angular.module("Redditate",[])
 		return
 
 	$scope.addComment = (postid)->
+		
     	window.addComment(postid,$scope.newComment)
     	$scope.newComment=""
     	$scope.loadData()
 
     $scope.addUpVote = (postid)->
-    	if not Nimbus.Auth.authorized
-    		return  alert("you have not login~!")
+    	if not Nimbus.Auth.authorized()
+    		return  alert("you should login before this action !")
     	votes = window.UpVote.findAllByAttribute('postid',postid)
     	for i in  votes 
     		if i.voter is window.user_email
@@ -127,8 +128,8 @@ window.Redditate=angular.module("Redditate",[])
     	window.addUpVote(postid)
 
     $scope.addDownVote = (postid)->
-    	if not Nimbus.Auth.authorized
-    		return  alert("you have not login~!")
+    	if not Nimbus.Auth.authorized()
+    		return  alert("you should login before this action !")
     	votes = window.DownVote.findAllByAttribute('postid',postid)
     	for i in  votes 
     		if i.voter is window.user_email

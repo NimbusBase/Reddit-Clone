@@ -125,8 +125,8 @@
     };
     $scope.addUpVote = function(postid) {
       var i, votes, _i, _len;
-      if (!Nimbus.Auth.authorized) {
-        return alert("you have not login~!");
+      if (!Nimbus.Auth.authorized()) {
+        return alert("you should login before this action !");
       }
       votes = window.UpVote.findAllByAttribute('postid', postid);
       for (_i = 0, _len = votes.length; _i < _len; _i++) {
@@ -139,8 +139,8 @@
     };
     $scope.addDownVote = function(postid) {
       var i, votes, _i, _len;
-      if (!Nimbus.Auth.authorized) {
-        return alert("you have not login~!");
+      if (!Nimbus.Auth.authorized()) {
+        return alert("you should login before this action !");
       }
       votes = window.DownVote.findAllByAttribute('postid', postid);
       for (_i = 0, _len = votes.length; _i < _len; _i++) {

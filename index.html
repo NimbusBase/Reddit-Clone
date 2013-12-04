@@ -175,11 +175,13 @@
 				</div>
 					  
 				<div class="foldout"  id ="comment_{{post.id}}"> 
-				  <tbody>  
+				  <tbody> 
+				 <span ng-show ="post.canDelete">
 			      <tr>  
 			        <td>&nbsp;<textarea rows="1" ng-model="$parent.newComment" id ="add_comment_{{post.id}}"></textarea>    </td> 
 			        <td><button class="btn" href="" ng-click ="addComment(post.id)">comment</button></td>    
-			      </tr>  
+			      </tr>
+			      </span>
  				</tbody>
  				   
  				  <div  ng-repeat="c in post.comments |filter:searchText track by $index" > 
