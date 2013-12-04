@@ -60,8 +60,10 @@ window.Redditate=angular.module("Redditate",[])
 	$scope.loadData = ()->
 		if(Nimbus.Auth.authorized())
 			$scope.login="Logout"
+			$scope.login_flag = true
 		else
 			$scope.login="Login"
+			$scope.login_flag = false
 		 
 
 		$scope.post_data = window.Post.all().sort(window.Post.ordersort)
@@ -112,7 +114,7 @@ window.Redditate=angular.module("Redditate",[])
 		return
 
 	$scope.addComment = (postid)->
-		
+
     	window.addComment(postid,$scope.newComment)
     	$scope.newComment=""
     	$scope.loadData()

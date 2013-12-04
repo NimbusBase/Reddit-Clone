@@ -60,8 +60,10 @@
       var downVotes, i, upVotes, _i, _len, _ref, _results;
       if (Nimbus.Auth.authorized()) {
         $scope.login = "Logout";
+        $scope.login_flag = true;
       } else {
         $scope.login = "Login";
+        $scope.login_flag = false;
       }
       $scope.post_data = window.Post.all().sort(window.Post.ordersort);
       _ref = $scope.post_data;
