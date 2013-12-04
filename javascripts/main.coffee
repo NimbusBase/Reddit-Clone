@@ -14,7 +14,8 @@ Nimbus.Auth.setup(syncInfo)
 #setup for  public  read
 Nimbus.Auth.service = "GCloud"
 localStorage["app_name"] ="waiter-code-sample-bucket"
-window.folder = {"Post":"Post","Comment":"Comment"}
+window.folder = {"Post":"Post","Comment":"Comment","UpVote":"UpVote","DownVote":"DownVote"}
+
 
 
 
@@ -78,13 +79,13 @@ window.Redditate=angular.module("Redditate",[])
 				window.addPost(result.title, result.link))
 		$scope.loadData()
 
-	$scope.bootPostDelete = (id)->
-		alert(id)
+	$scope.bootPostDelete = (id)-> 
 		bootbox.confirm("Are you sure?", (result)->
 			if(result is true) 
 				p = window.Post.find(id)
 				p.destroy()
-			return 
+				$scope.loadData()
+		    
 		)
 	$scope.bootPostEdit = (id)->
 		bootbox.prompt("Edit  post",(result)->
@@ -94,7 +95,9 @@ window.Redditate=angular.module("Redditate",[])
 				alert("should not be  null")
 			else
 				EditPost(id,result.title, result.link)
+			$scope.loadData()
 		,id)
+
 
 
 	$scope.showComment = (id)->
@@ -111,14 +114,7 @@ window.Redditate=angular.module("Redditate",[])
     	   
     	window.addComment(postid,$scope.newComment)
     	$scope.newComment=""
-
-
-
-
-
-
-
-
+    	$scope.loadData()
 
 
 	$scope.ta = ()->
@@ -140,33 +136,38 @@ window.Redditate=angular.module("Redditate",[])
 
 
 #############
- 
+window.syncData = ()->
+	window.Post.sync_all  ()->
+		window.Comment.sync_all ()->
+			window.UpVote.sync_all ()->
+				window.DownVote.sync_all ()->
+					window.loadData()
+
+window.loadData = ()->
+	angular.element('[ng-controller=RedditateControl]').scope().loadData()
+	angular.element('[ng-controller=RedditateControl]').scope().$apply()
+	 
 
 #Sync  
 Nimbus.Auth.set_app_ready(()->  
 
-   	
+   
 	if Nimbus.Auth.authorized?  && Nimbus.Auth.authorized()
 		localStorage["user_email"] = window.user_email
 		$("#loginfo").html("Logout")
 
-		window.Post.sync_all ()->
-			window.Comment.sync_all()
 		 
 	else if not (localStorage["state"] is "Auth")
 	 	
 		localStorage["Post_count"] = window.Post.all().length 
 		localStorage["Comment_count"]  =  window.Comment.all().length
-		window.Post.sync_all  ()->
-			window.Comment.sync_all ()->
-				# if  localStorage["Post_count"] <  window.Post.all().length 
-				# 	setTimeout("window.location.reload();",3000)
-				# if   localStorage["Comment_count"] <  window.Comment.all().length
-				#     setTimeout("window.location.reload();",3000)
 
+	window.syncData()
+	angular.bootstrap(document.body, ['Redditate'])
 	
-	angular.bootstrap(document.body, ['Redditate']);
+	setInterval("window.loadData();",5000)
 )
+
 
 window.Login_out = ()->
  
@@ -184,12 +185,14 @@ window.addPost = (title,link)->
 		"create_time":Date()
 		"owner":window.user_email
 	window.Post.create(post)
+	window.loadData()
 
 window.EditPost = (id,title,link)->
 	p = Post.find(id)
 	p.title = title
 	p.link = link
 	p.save()
+	window.loadData()
 
 
 
@@ -202,6 +205,7 @@ window.addComment = (postid,comment)->
 		"owner":window.user_email
 		"name" :window.user_name
 	window.Comment.create(newcomment)
+	window.loadData()
 
 
 window.addUpVote = (postid)-> 
@@ -209,6 +213,7 @@ window.addUpVote = (postid)->
 		"postid":postid 
 		"voter":window.user_email 
 	window.UpVote.create(newUpVote)
+	window.loadData()
 
  
 
@@ -217,5 +222,6 @@ window.addDownVote = (postid)->
 		"postid":postid 
 		"voter":window.user_email 
 	window.DownVote.create(newDownVote)
+	window.loadData()
 
 

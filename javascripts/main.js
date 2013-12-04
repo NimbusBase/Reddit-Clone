@@ -20,7 +20,9 @@
 
   window.folder = {
     "Post": "Post",
-    "Comment": "Comment"
+    "Comment": "Comment",
+    "UpVote": "UpVote",
+    "DownVote": "DownVote"
   };
 
   window.Post = Nimbus.Model.setup("Post", ["title", "link", "category", "create_time"]);
@@ -84,12 +86,12 @@
       return $scope.loadData();
     };
     $scope.bootPostDelete = function(id) {
-      alert(id);
       return bootbox.confirm("Are you sure?", function(result) {
         var p;
         if (result === true) {
           p = window.Post.find(id);
           p.destroy();
+          return $scope.loadData();
         }
       });
     };
@@ -99,10 +101,11 @@
           return;
         }
         if ((result.title === null) || (result.link === null)) {
-          return alert("should not be  null");
+          alert("should not be  null");
         } else {
-          return EditPost(id, result.title, result.link);
+          EditPost(id, result.title, result.link);
         }
+        return $scope.loadData();
       }, id);
     };
     $scope.showComment = function(id) {
@@ -116,7 +119,8 @@
       $scope.newComment = "";
       return $scope.addComment = function(postid) {
         window.addComment(postid, $scope.newComment);
-        return $scope.newComment = "";
+        $scope.newComment = "";
+        return $scope.loadData();
       };
     };
     return $scope.ta = function() {
@@ -124,21 +128,34 @@
     };
   });
 
+  window.syncData = function() {
+    return window.Post.sync_all(function() {
+      return window.Comment.sync_all(function() {
+        return window.UpVote.sync_all(function() {
+          return window.DownVote.sync_all(function() {
+            return window.loadData();
+          });
+        });
+      });
+    });
+  };
+
+  window.loadData = function() {
+    angular.element('[ng-controller=RedditateControl]').scope().loadData();
+    return angular.element('[ng-controller=RedditateControl]').scope().$apply();
+  };
+
   Nimbus.Auth.set_app_ready(function() {
     if ((Nimbus.Auth.authorized != null) && Nimbus.Auth.authorized()) {
       localStorage["user_email"] = window.user_email;
       $("#loginfo").html("Logout");
-      window.Post.sync_all(function() {
-        return window.Comment.sync_all();
-      });
     } else if (!(localStorage["state"] === "Auth")) {
       localStorage["Post_count"] = window.Post.all().length;
       localStorage["Comment_count"] = window.Comment.all().length;
-      window.Post.sync_all(function() {
-        return window.Comment.sync_all(function() {});
-      });
     }
-    return angular.bootstrap(document.body, ['Redditate']);
+    window.syncData();
+    angular.bootstrap(document.body, ['Redditate']);
+    return setInterval("window.loadData();", 5000);
   });
 
   window.Login_out = function() {
@@ -159,7 +176,8 @@
       "create_time": Date(),
       "owner": window.user_email
     };
-    return window.Post.create(post);
+    window.Post.create(post);
+    return window.loadData();
   };
 
   window.EditPost = function(id, title, link) {
@@ -167,7 +185,8 @@
     p = Post.find(id);
     p.title = title;
     p.link = link;
-    return p.save();
+    p.save();
+    return window.loadData();
   };
 
   window.addComment = function(postid, comment) {
@@ -179,7 +198,8 @@
       "owner": window.user_email,
       "name": window.user_name
     };
-    return window.Comment.create(newcomment);
+    window.Comment.create(newcomment);
+    return window.loadData();
   };
 
   window.addUpVote = function(postid) {
@@ -188,7 +208,8 @@
       "postid": postid,
       "voter": window.user_email
     };
-    return window.UpVote.create(newUpVote);
+    window.UpVote.create(newUpVote);
+    return window.loadData();
   };
 
   window.addDownVote = function(postid) {
@@ -197,7 +218,8 @@
       "postid": postid,
       "voter": window.user_email
     };
-    return window.DownVote.create(newDownVote);
+    window.DownVote.create(newDownVote);
+    return window.loadData();
   };
 
 }).call(this);
