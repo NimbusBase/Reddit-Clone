@@ -43,12 +43,13 @@ window.Post.ordersort = (a,b)->
 # angular  code
 #############
 window.Redditate=angular.module("Redditate",[])
-.controller("RedditateControl", ($scope)->
-	 
-	$scope.login = "login" 
+.controller("RedditateControl", ($scope)-> 
+	$scope.login = "Login"
+	$scope.newComment=""
+  
 	$scope.loginOut = ()->
 		if Nimbus.Auth.authorized()
-			Nimbus.Auth.logout()
+			Nimbus.Auth.logout() 
 			$scope.loadData()
 		else 
 			Nimbus.Auth.authorize("GCloud")
@@ -57,16 +58,27 @@ window.Redditate=angular.module("Redditate",[])
 
 			 
 	$scope.loadData = ()->
-		$scope.post_data = window.Post.all().sort(window.Post.ordersort)
+		if(Nimbus.Auth.authorized())
+			$scope.login="Logout"
+		else
+			$scope.login="Login"
+		 
 
+		$scope.post_data = window.Post.all().sort(window.Post.ordersort)
+ 
 		for i in $scope.post_data
+			upVotes = window.UpVote.findAllByAttribute('postid',i.id);
+			downVotes = window.DownVote.findAllByAttribute('postid',i.id);
+			i.upVoteCount = upVotes.length
+			i.downVoteCount = downVotes.length
+
 			if(i.owner ==  localStorage["user_email"])
 				i.canDelete = true
 			else
 				i.canDelete = false 
 			# alert(i.canDelete) 
 			i.comments = window.Comment.findAllByAttribute("postid",i.id)
-
+		
 	$scope.loadData()
 
 	$scope.bootPostAdd = ()->
@@ -97,29 +109,43 @@ window.Redditate=angular.module("Redditate",[])
 				EditPost(id,result.title, result.link)
 			$scope.loadData()
 		,id)
+		return
 
-
-
-	$scope.showComment = (id)->
-		className = $('#comment_'+id).attr('class');
-		if(className is "foldout")
-      		$('#comment_'+id).attr('class', "foldout2");
-     	else
-      		$('#comment_'+id).attr('class', "foldout");
-
-
-    $scope.newComment=""
-
-    $scope.addComment  =(postid)->
-    	   
+	$scope.addComment = (postid)->
     	window.addComment(postid,$scope.newComment)
     	$scope.newComment=""
     	$scope.loadData()
 
+    $scope.addUpVote = (postid)->
+    	if not Nimbus.Auth.authorized
+    		return  alert("you have not login~!")
+    	votes = window.UpVote.findAllByAttribute('postid',postid)
+    	for i in  votes 
+    		if i.voter is window.user_email
+    			return  alert("you have voted~!")
 
+    	window.addUpVote(postid)
+
+    $scope.addDownVote = (postid)->
+    	if not Nimbus.Auth.authorized
+    		return  alert("you have not login~!")
+    	votes = window.DownVote.findAllByAttribute('postid',postid)
+    	for i in  votes 
+    		if i.voter is window.user_email
+    			return  alert("you have voted~!")
+    	window.addDownVote(postid)
+
+    $scope.showComment = (id)->
+    	className = $('#comment_'+id).attr('class')
+    	if(className is "foldout")
+    		$('#comment_'+id).attr('class', "foldout2")
+    	else
+    		$('#comment_'+id).attr('class', "foldout")
+
+
+    
 	$scope.ta = ()->
 		alert("hahaha")
-
 )
 
 
@@ -154,7 +180,7 @@ Nimbus.Auth.set_app_ready(()->
    
 	if Nimbus.Auth.authorized?  && Nimbus.Auth.authorized()
 		localStorage["user_email"] = window.user_email
-		$("#loginfo").html("Logout")
+		#$("#loginfo").html("Logout")
 
 		 
 	else if not (localStorage["state"] is "Auth")
@@ -165,7 +191,8 @@ Nimbus.Auth.set_app_ready(()->
 	window.syncData()
 	angular.bootstrap(document.body, ['Redditate'])
 	
-	setInterval("window.loadData();",5000)
+	setInterval("window.syncData();",5000)
+	setInterval("window.loadData();",1000)
 )
 
 

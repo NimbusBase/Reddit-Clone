@@ -90,7 +90,7 @@
 				-->
 			</h1>
 			<span class="view-options">
-			<a ng-click="loginOut()"   id="loginfo" class="fullview"  href="" >Login</a> -
+			<a ng-click="loginOut()"   id="loginfo" class="fullview"  href="" >{{login}}</a> -
 			
  
 			<a  class="fullview"  href=""  id="add_post2"  ng-click="bootPostAdd();">Post</a> |
@@ -161,8 +161,8 @@
 					<a class="post-title" href={{post.link}} target="_blank">{{post.title}}</a>
 					<p <="" h2="">
 				</p><div class="metadata">
-				    <a  ng-click=""> UP()</a> |
-					<a  ng-click="" >DOWN( )</a> | 
+				    <a  ng-click="addUpVote(post.id);"> Up({{post.upVoteCount}})</a> |
+					<a  ng-click="addDownVote(post.id);" >Down({{post.downVoteCount}})</a> | 
 					by {{post.owner}}  |
 				  
   					<span ng-show ="post.canDelete">

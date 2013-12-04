@@ -45,7 +45,8 @@
   };
 
   window.Redditate = angular.module("Redditate", []).controller("RedditateControl", function($scope) {
-    $scope.login = "login";
+    $scope.login = "Login";
+    $scope.newComment = "";
     $scope.loginOut = function() {
       if (Nimbus.Auth.authorized()) {
         Nimbus.Auth.logout();
@@ -56,12 +57,21 @@
       }
     };
     $scope.loadData = function() {
-      var i, _i, _len, _ref, _results;
+      var downVotes, i, upVotes, _i, _len, _ref, _results;
+      if (Nimbus.Auth.authorized()) {
+        $scope.login = "Logout";
+      } else {
+        $scope.login = "Login";
+      }
       $scope.post_data = window.Post.all().sort(window.Post.ordersort);
       _ref = $scope.post_data;
       _results = [];
       for (_i = 0, _len = _ref.length; _i < _len; _i++) {
         i = _ref[_i];
+        upVotes = window.UpVote.findAllByAttribute('postid', i.id);
+        downVotes = window.DownVote.findAllByAttribute('postid', i.id);
+        i.upVoteCount = upVotes.length;
+        i.downVoteCount = downVotes.length;
         if (i.owner === localStorage["user_email"]) {
           i.canDelete = true;
         } else {
@@ -96,7 +106,7 @@
       });
     };
     $scope.bootPostEdit = function(id) {
-      return bootbox.prompt("Edit  post", function(result) {
+      bootbox.prompt("Edit  post", function(result) {
         if (result === null) {
           return;
         }
@@ -108,20 +118,47 @@
         return $scope.loadData();
       }, id);
     };
+    $scope.addComment = function(postid) {
+      window.addComment(postid, $scope.newComment);
+      $scope.newComment = "";
+      return $scope.loadData();
+    };
+    $scope.addUpVote = function(postid) {
+      var i, votes, _i, _len;
+      if (!Nimbus.Auth.authorized) {
+        return alert("you have not login~!");
+      }
+      votes = window.UpVote.findAllByAttribute('postid', postid);
+      for (_i = 0, _len = votes.length; _i < _len; _i++) {
+        i = votes[_i];
+        if (i.voter === window.user_email) {
+          return alert("you have voted~!");
+        }
+      }
+      return window.addUpVote(postid);
+    };
+    $scope.addDownVote = function(postid) {
+      var i, votes, _i, _len;
+      if (!Nimbus.Auth.authorized) {
+        return alert("you have not login~!");
+      }
+      votes = window.DownVote.findAllByAttribute('postid', postid);
+      for (_i = 0, _len = votes.length; _i < _len; _i++) {
+        i = votes[_i];
+        if (i.voter === window.user_email) {
+          return alert("you have voted~!");
+        }
+      }
+      return window.addDownVote(postid);
+    };
     $scope.showComment = function(id) {
       var className;
       className = $('#comment_' + id).attr('class');
       if (className === "foldout") {
-        $('#comment_' + id).attr('class', "foldout2");
+        return $('#comment_' + id).attr('class', "foldout2");
       } else {
-        $('#comment_' + id).attr('class', "foldout");
+        return $('#comment_' + id).attr('class', "foldout");
       }
-      $scope.newComment = "";
-      return $scope.addComment = function(postid) {
-        window.addComment(postid, $scope.newComment);
-        $scope.newComment = "";
-        return $scope.loadData();
-      };
     };
     return $scope.ta = function() {
       return alert("hahaha");
@@ -148,14 +185,14 @@
   Nimbus.Auth.set_app_ready(function() {
     if ((Nimbus.Auth.authorized != null) && Nimbus.Auth.authorized()) {
       localStorage["user_email"] = window.user_email;
-      $("#loginfo").html("Logout");
     } else if (!(localStorage["state"] === "Auth")) {
       localStorage["Post_count"] = window.Post.all().length;
       localStorage["Comment_count"] = window.Comment.all().length;
     }
     window.syncData();
     angular.bootstrap(document.body, ['Redditate']);
-    return setInterval("window.loadData();", 5000);
+    setInterval("window.syncData();", 5000);
+    return setInterval("window.loadData();", 1000);
   });
 
   window.Login_out = function() {
