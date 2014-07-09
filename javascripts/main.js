@@ -16,7 +16,7 @@
 
   Nimbus.Auth.service = "GCloud";
 
-  localStorage["app_name"] = "waiter-code-sample-bucket";
+  localStorage["app_name"] = "nimbus-reddit-clone";
 
   window.folder = {
     "Post": "Post",
