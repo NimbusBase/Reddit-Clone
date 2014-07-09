@@ -4,11 +4,11 @@
 
   syncInfo = {
     "GCloud": {
-      "key": '195693500289.apps.googleusercontent.com',
+      "key": '352237559585-go83rqql7pi7ob3r0290vaa10lqdjite.apps.googleusercontent.com',
       "scope": 'https://www.googleapis.com/auth/devstorage.full_control',
-      "app_name": "waiter-code-sample-bucket",
-      "api_key": 'AIzaSyBVDs0bXkbSuflogzPL_JgMUPgRPXSDcCc',
-      "project_id": "195693500289"
+      "app_name": "nimbus-reddit-clone",
+      "api_key": 'y8UhA2Fgt2NIybwhmGX22tMN',
+      "project_id": "352237559585"
     }
   };
 
